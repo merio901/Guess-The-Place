@@ -27,7 +27,7 @@ module.exports = {
      },
     {
       test: /\.css$/,
-      use: [ 'style-loader', 'css-loader', "postcss-loader" ]
+      use: [ 'style-loader', 'css-loader']
     },
       {
          test: /\.(woff|woff2)$/,
@@ -43,11 +43,5 @@ module.exports = {
      },
    ]
  },
- plugins: [
-   require('autoprefixer'),
-   new webpack.SourceMapDevToolPlugin({
-  filename: 'bundle.js.map',
-  exclude: ['/node_modules/','vendor.js']
-})
- ]
+ 
 };
