@@ -4,13 +4,29 @@
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   </head>
   <body>
     <div id="map"></div>
 
+    <div class="container">
+      <div id="street-view">
+        <h1>Enter Location:</h1>
+        <form id="form">
+          <input type="text" id="location-input" class="form-control form-control-lg"/>
+          <br>
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          <br>
+        </form>
+      </div>
+      <div id="formatted-address"></div>
+      <div id="address-components"></div>
+      <div id="geometry"></div>
+    </div>
+
   </body>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5vQlnzJ96jGdY0dT2vlVDY3n19_QQtg"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5vQlnzJ96jGdY0dT2vlVDY3n19_QQtg"></script>
   <script type="text/javascript" src="../dist/bundle.js"></script>
 </html>
