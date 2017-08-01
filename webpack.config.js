@@ -8,6 +8,11 @@ module.exports = {
     path: path.resolve(__dirname, './src/dist'),
     filename: 'bundle.js'
   },
+    devServer: {
+      inline: true,
+      contentBase: './src/views/',
+      port: 3001
+    },
   module: {
    rules: [
      {
