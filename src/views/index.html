@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>GuessThePlace - GoogleMaps API game</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   </head>
   <body>
-    <div id="map"></div>
-    <div id="street-view"></div>
-    <div class="container">
-      <div>
-        <h1>Enter Location:</h1>
-        <form id="form">
-          <input type="text" id="location-input" class="form-control form-control-lg"/>
-          <br>
-          <button type="submit" class="btn btn-primary btn-block">Submit</button>
-          <br>
+    <div class="upperPanel"></div>
+    <div class="street-view"></div>
+    <div class="bottomPanel">
+      <div class="container">
+        <form class="form">
+          <label class="input-label">Enter country:
+            <input type="text" class="location-input" value=""></input>
+          </label>
+          <button type="submit" class="submit-button">Submit</button>
+          <button class="skip-round">Skip round</button>
         </form>
+        <div class="message">Success!</div>
       </div>
-      <div id="formatted-address"></div>
-      <div id="address-components"></div>
-      <div id="geometry"></div>
     </div>
+    <div class="map"></div>
 
   </body>
 

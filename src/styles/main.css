@@ -7,11 +7,44 @@ html, body {
 
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
-#map {
-  height: 50%;
+.map {
+  height: 40%;
 }
-#street-view {
-  height: 50%;
+.street-view {
+  height: 80%;
   width: 100%;
   background-color: turquoise;
+}
+.upperPanel {
+  height: 10%;
+  background-color: darkgreen;
+}
+.bottomPanel {
+  height: 10%;
+  background-color: darkgreen;
+}
+.container {
+  position: relative;
+}
+.form {
+  width: 100%;
+  font-size: 30px;
+}
+.input-label {
+  color: white;
+}
+.location-input {
+  width: 500px;
+  color: black;
+}
+.message {
+  color: white;
+  font-size: 40px;
+  display: inline-block;
+  margin: auto;
+  width: 300px;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }
