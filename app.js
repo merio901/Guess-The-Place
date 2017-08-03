@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", function(){
       fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
       .then(res => res.json())
       .then(res => {
-        if(checkCountry(formCountryVal, res) === "true"){
-          console.log('hi');
+        if(checkCountry(formCountryVal, res) === true){
+          console.log('NICE!');
         }
 
         })
