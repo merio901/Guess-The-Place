@@ -1,4 +1,6 @@
-import { Round } from './round.js'
+import { Round } from './round.js';
+
+
 export class TheGame{
   constructor(){
     this.rounds = [];
@@ -7,10 +9,10 @@ export class TheGame{
     return this.roundCount;
   }
   updateUpperPanel = () =>{
-
+    // TODO:
   }
   updateBottomPanel = () =>{
-
+    // TODO:
   }
   generateRound = (nextRound) =>{
     let round = new Round();

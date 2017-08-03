@@ -3,18 +3,15 @@ import { roundsDatabase } from './roundsDatabase.js';
 
 export class Round {
   constructor(){
-    this.initLat = 0;
-    this.initLng = 0;
   }
   geocode = (nextRound) =>{
     let location = roundsDatabase[nextRound].location;
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
     .then(res => res.json())
     .then(res => {
-      console.log(res);
+      console.log("Response from API: ",res);
 
       // CHECK FOR VALID PLACE TO GENERATE MAP AND STREETVIEW
-      let count = 3;
         // if(res.results.length > 0) {
         //   res.results[0].address_components.map((addressComponent)=>{
         //     if(addressComponent.types[0] === "country"){
@@ -30,20 +27,18 @@ export class Round {
         //   })
         // }
 
-      if(count === 3){
-
         // GET GEOMETRY THEN INIT MAP AND STREETVIEW
         let lat = res.results[0].geometry.location.lat;
         let lng = res.results[0].geometry.location.lng;
         this.initStreetView(lat, lng);
         this.initMap(lat, lng);
-      } else {
-        console.error("Something went wrong! (Lat/Lng inapropriate!)");
-      }
+
+
     })
     .catch(err => {
       console.log(err);
     })
+
   }
   initStreetView = (lat, lng) =>{
     var location = {lat: lat, lng: lng};

@@ -20,7 +20,7 @@ html, body {
   background-color: darkgreen;
 }
 .bottomPanel {
-  height: 10%;
+  height: 20%;
   background-color: darkgreen;
 }
 .container {
@@ -30,10 +30,10 @@ html, body {
   width: 100%;
   font-size: 30px;
 }
-.input-label {
+label {
   color: white;
 }
-.location-input {
+input {
   width: 500px;
   color: black;
 }
@@ -47,4 +47,7 @@ html, body {
   margin: 0 auto;
   left: 0;
   right: 0;
+}
+.invisible {
+  display: none;
 }

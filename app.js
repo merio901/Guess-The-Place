@@ -1,28 +1,75 @@
 import './src/styles/main.css';
 import { TheGame } from './src/js/gameCreator.js';
-import { Round } from './src/js/round.js';
+import { checkCountry, checkCity } from './src/js/checkers.js';
+import { roundsDatabase } from './src/js/roundsDatabase.js';
+
 
 
 document.addEventListener("DOMContentLoaded", function(){
 
+  // CREATE NEW GAME AND GENERATE FIRST ROUND
+  let theGame = new TheGame();
+  theGame.generateRound(theGame.rounds.length);
 
-var theGame = new TheGame();
-console.log(theGame.rounds);
 
-var roundCount = 0;
-var skipRound = document.querySelector('.skip-round');
+  let skipRound = document.querySelector('.skip-round');
+  let formCountry = document.querySelector('.form-country');
+  let formCity = document.querySelector('.form-city');
+  let formStreet = document.querySelector('.form-street');
 
-skipRound.addEventListener('click', function(e){
-  e.preventDefault();
-  theGame.generateRound(roundCount);
-  console.log(theGame.rounds);
-  console.log(theGame.rounds.length);
-  roundCount++;
+  //CHECK COUNTRY
+  formCountry.addEventListener('submit', function(e){
+    e.preventDefault();
 
-  if(theGame.rounds.length == 3){
-    console.log("STYYYKA PANIE");
-  }
-})
+    // let countryLabel = form.querySelector('.country');
+    // let cityLabel = form.querySelector('.city');
+    // let streetLabel = form.querySelector('.street');
+    let formCountryVal = document.querySelector('.location-country').value;
+
+    if(formCountry.className != 'invisible') {
+      let location = roundsDatabase[theGame.rounds.length-1].location;
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+      .then(res => res.json())
+      .then(res => {
+        if(checkCountry(formCountryVal, res) === "true"){
+          console.log('hi');
+        }
+
+        })
+    }
+
+
+
+
+
+
+
+    // CHECK CITY
+    // if(cityLabel.className != 'invisible') {
+    //   let location = roundsDatabase[theGame.rounds.length-1].location;
+    //   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     checkCity(formVal, res);
+    //
+    //     })
+    // }
+
+  })
+
+
+
+
+  skipRound.addEventListener('click', function(e){
+    e.preventDefault();
+    theGame.generateRound(theGame.rounds.length);
+    console.log(theGame.rounds);
+    console.log(theGame.rounds.length);
+
+    if(theGame.rounds.length == 3){
+      console.log("STYYYKA PANIE");
+    }
+  })
 
 // var skipper = document.querySelector('.skipper');
 //

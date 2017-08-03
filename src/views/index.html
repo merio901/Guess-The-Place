@@ -12,13 +12,30 @@
     <div class="street-view"></div>
     <div class="bottomPanel">
       <div class="container">
-        <form class="form">
-          <label class="input-label">Enter country:
-            <input type="text" class="location-input" value=""></input>
+        <form class="form form-country">
+          <label class="country">Enter country:
+            <input type="text" class="location-country" value=""></input>
           </label>
           <button type="submit" class="submit-button">Submit</button>
           <button class="skip-round">Skip round</button>
         </form>
+
+        <form class="form form-city invisible">
+          <label class="city">Enter city:
+            <input type="text" class="location-city" value=""></input>
+          </label>
+          <button type="submit" class="submit-button">Submit</button>
+          <button class="skip-round">Skip round</button>
+        </form>
+
+        <form class="form form-street invisible">
+          <label class="street">Enter street:
+            <input type="text" class="location-street" value=""></input>
+          </label>
+          <button type="submit" class="submit-button">Submit</button>
+          <button class="skip-round">Skip round</button>
+        </form>
+        
         <div class="message">Success!</div>
       </div>
     </div>
