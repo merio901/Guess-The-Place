@@ -20,7 +20,7 @@ html, body {
   background-color: darkgreen;
 }
 .bottomPanel {
-  height: 20%;
+  height: 10%;
   background-color: darkgreen;
 }
 .container {
@@ -39,14 +39,20 @@ input {
 }
 .message {
   color: white;
-  font-size: 40px;
+  font-size: 35px;
   display: inline-block;
   margin: auto;
-  width: 300px;
+  width: 800px;
   position: absolute;
   margin: 0 auto;
   left: 0;
   right: 0;
+}
+.shots {
+  color: white;
+  font-size: 40px;
+  position: absolute;
+  right: 200px;
 }
 .invisible {
   display: none;

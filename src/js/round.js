@@ -3,10 +3,11 @@ import { roundsDatabase } from './roundsDatabase.js';
 
 export class Round {
   constructor(){
+    
   }
   geocode = (nextRound) =>{
     let location = roundsDatabase[nextRound].location;
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&libraries=places`)
     .then(res => res.json())
     .then(res => {
       console.log("Response from API: ",res);
@@ -54,6 +55,10 @@ export class Round {
       center: {lat: lat, lng: lng},
       zoom: 16
     });
+    var marker = new google.maps.Marker({
+          position: {lat: lat, lng: lng},
+          map: map
+        });
   }
 
 }

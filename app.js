@@ -1,6 +1,6 @@
 import './src/styles/main.css';
 import { TheGame } from './src/js/gameCreator.js';
-import { checkCountry, checkCity } from './src/js/checkers.js';
+import { checkCountry, checkCity, checkStreet } from './src/js/checkers.js';
 import { roundsDatabase } from './src/js/roundsDatabase.js';
 
 
@@ -11,65 +11,102 @@ document.addEventListener("DOMContentLoaded", function(){
   let theGame = new TheGame();
   theGame.generateRound(theGame.rounds.length);
 
-
-  let skipRound = document.querySelector('.skip-round');
+  let skipRound = document.querySelectorAll('.skip-round');
   let formCountry = document.querySelector('.form-country');
   let formCity = document.querySelector('.form-city');
   let formStreet = document.querySelector('.form-street');
+  let messageDiv = document.querySelector('.message');
+  let shotsDiv = document.querySelector('.shots');
+
 
   //CHECK COUNTRY
   formCountry.addEventListener('submit', function(e){
     e.preventDefault();
-
-    // let countryLabel = form.querySelector('.country');
-    // let cityLabel = form.querySelector('.city');
-    // let streetLabel = form.querySelector('.street');
     let formCountryVal = document.querySelector('.location-country').value;
 
     if(formCountry.className != 'invisible') {
       let location = roundsDatabase[theGame.rounds.length-1].location;
       fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+      .then(res => res.json()
+      .then(res => {
+        console.log(res);
+        if(checkCountry(formCountryVal, res) === true){
+          formCountry.classList.add('invisible');
+          formCity.classList.remove('invisible');
+          messageDiv.innerText = "Good job! Try guessing city now."
+          theGame.shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+        } else {
+          messageDiv.innerText = "You're probably wrong! Try again."
+          theGame.shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+        }
+      }))
+    }
+  })
+
+  formCity.addEventListener('submit', function(e){
+    e.preventDefault();
+    let formCityVal = document.querySelector('.location-city').value;
+
+    if(formCity.className != 'invisible') {
+      let location = roundsDatabase[theGame.rounds.length-1].location;
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
       .then(res => res.json())
       .then(res => {
-        if(checkCountry(formCountryVal, res) === true){
-          console.log('NICE!');
+        console.log(checkCity(formCityVal,res));
+        if(checkCity(formCityVal, res) === true){
+          formCity.classList.add('invisible');
+          formStreet.classList.remove('invisible');
+          messageDiv.innerText = "Nice! Time to guess the street."
+          theGame.shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+        } else {
+          messageDiv.innerText = "Nope!"
+          theGame.shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.shots}`
         }
-
-        })
+      })
     }
-
-
-
-
-
-
-
-    // CHECK CITY
-    // if(cityLabel.className != 'invisible') {
-    //   let location = roundsDatabase[theGame.rounds.length-1].location;
-    //   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     checkCity(formVal, res);
-    //
-    //     })
-    // }
-
   })
 
 
-
-
-  skipRound.addEventListener('click', function(e){
+  formStreet.addEventListener('submit', function(e){
     e.preventDefault();
-    theGame.generateRound(theGame.rounds.length);
-    console.log(theGame.rounds);
-    console.log(theGame.rounds.length);
+    let formStreetVal = document.querySelector('.location-street').value;
 
-    if(theGame.rounds.length == 3){
-      console.log("STYYYKA PANIE");
+    if(formStreet.className != 'invisible') {
+      let location = roundsDatabase[theGame.rounds.length-1].location;
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(checkStreet(formStreetVal,res));
+        if(checkStreet(formStreetVal, res) === true){
+          console.log('hi');
+          messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
+          messageDiv.style.fontSize = "30px";
+          shotsDiv.classList.add('invisible');
+        } else {
+          messageDiv.innerText = "Try again!"
+        }
+      })
     }
   })
+
+  for(let i=0; i<skipRound.length; i++){
+    skipRound[i].addEventListener('click', function(e){
+      e.preventDefault();
+      theGame.generateRound(theGame.rounds.length);
+      console.log(theGame.rounds);
+      console.log(theGame.rounds.length);
+      theGame.shots=10;
+      shotsDiv.innerText = `Shots left: ${theGame.shots}`;
+      messageDiv.innerText = "Guess the country first";
+      formStreet.classList.add('invisible');
+      formCity.classList.add('invisible');
+      formCountry.classList.remove('invisible');
+    })
+  }
 
 // var skipper = document.querySelector('.skipper');
 //
