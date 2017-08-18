@@ -2,21 +2,16 @@ import './src/styles/main.css';
 import { TheGame } from './src/js/gameCreator.js';
 import { checkCountry, checkCity, checkStreet } from './src/js/checkers.js';
 import { roundsDatabase } from './src/js/roundsDatabase.js';
+import { Round } from './src/js/round.js'
 
 let theGame;
+let markers = [];
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function(){
-
-
-  // CREATE NEW GAME AND GENERATE FIRST ROUND
-  theGame = new TheGame();
-  theGame.generateRound(theGame.rounds.length);
-
-  let map = new google.maps.Map(document.querySelector('.map'), {
-    center: {lat: 0, lng: 0},
-    zoom: 2
-  });
-
 
   let skipRound = document.querySelectorAll('.skip-round');
   let formCountry = document.querySelector('.form-country');
@@ -26,7 +21,15 @@ document.addEventListener("DOMContentLoaded", function(){
   let shotsDiv = document.querySelector('.shots');
 
 
-  //CHECK COUNTRY
+  // CREATE NEW GAME AND GENERATE FIRST ROUND
+  theGame = new TheGame();
+  theGame.generateRound(theGame.rounds.length);
+  let map = new google.maps.Map(document.querySelector('.map'), {
+    center: {lat: 0, lng: 0},
+    zoom: 2
+  });
+
+  //COUNTRY FORM
   formCountry.addEventListener('submit', function(e){
     e.preventDefault();
     let formCountryVal = document.querySelector('.location-country').value;
@@ -52,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   })
 
+  //CITY FORM
   formCity.addEventListener('submit', function(e){
     e.preventDefault();
     let formCityVal = document.querySelector('.location-city').value;
@@ -77,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   })
 
+  //STREET FORM
   formStreet.addEventListener('submit', function(e){
     e.preventDefault();
     let formStreetVal = document.querySelector('.location-street').value;
@@ -102,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   })
 
+  //SKIP ROUND BUTTON
   for(let i=0; i<skipRound.length; i++){
     skipRound[i].addEventListener('click', function(e){
       e.preventDefault();
@@ -113,7 +119,9 @@ document.addEventListener("DOMContentLoaded", function(){
       formStreet.classList.add('invisible');
       formCity.classList.add('invisible');
       formCountry.classList.remove('invisible');
-
+      deleteMarkers();
+      map.setCenter(new google.maps.LatLng(0, 0));
+      map.setZoom(2);
       if(theGame.rounds.length == 5){
         console.log('hi');
       }
@@ -121,6 +129,8 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
 
+
+  //HANDLE CLICK ON MAP
   google.maps.event.addListener(map, 'click', function(event) {
     placeMarker(event.latLng);
     let location = roundsDatabase[theGame.rounds.length-1].location;
@@ -132,143 +142,22 @@ document.addEventListener("DOMContentLoaded", function(){
       var heading = google.maps.geometry.spherical.computeDistanceBetween(origin1, origin2);
       console.log(parseInt(heading));
     })
-
   });
+
 
   function placeMarker(location) {
     var marker = new google.maps.Marker({
         position: location,
         map: map
     });
+    markers.push(marker);
   }
-// var skipper = document.querySelector('.skipper');
-//
-//
-// skipper.addEventListener("onClick", function(e){
-//   e.preventDefault();
-//   console.log('hi');
-// })
-
-
-// var map;
-// var panorama;
-//
-//
-// var startingLat = parseFloat((Math.random() * 180 - 90).toFixed(6));
-// var startingLng = parseFloat((Math.random() * 180 - 90).toFixed(6));
-// console.log(startingLng);
-// console.log(startingLat);
-//
-//
-// var location = {lat: startingLat, lng: startingLng};
-//
-// function initMap() {
-//   var prosta = location;
-//   var sv = new google.maps.StreetViewService();
-//   panorama = new google.maps.StreetViewPanorama(document.querySelector('.street-view'), {
-//     disableDefaultUI: true,
-//     showRoadLabels: false
-//   });
-//
-//   // Set up the map.
-//   map = new google.maps.Map(document.querySelector('.map'), {
-//     center: prosta,
-//     zoom: 16,
-//     streetViewControl: false
-//   });
-//
-//   // Set the initial Street View camera to the center of the map
-//   sv.getPanorama({location: prosta, radius: 50}, processSVData);
-//
-//
-//   // Look for a nearby Street View panorama when the map is clicked.
-//   // getPanoramaByLocation will return the nearest pano when the
-//   // given radius is 50 meters or less.
-//
-//   // map.addListener('click', function(event) {
-//   //   sv.getPanorama({location: event.latLng, radius: 50}, processSVData);
-//   // });
-// }
-//
-// function processSVData(data, status) {
-//   console.log(data);
-//   if (status === 'OK') {
-//     // var marker = new google.maps.Marker({
-//     //   position: data.location.latLng,
-//     //   map: map,
-//     //   title: data.location.description
-//     // });
-//
-//     panorama.setPano(data.location.pano);
-//
-//
-//     //
-//     // marker.addListener('click', function() {
-//     //   var markerPanoID = data.location.pano;
-//     //   // Set the Pano to use the passed panoID.
-//     //   panorama.setPano(markerPanoID);
-//     //   panorama.setPov({
-//     //     heading: 270,
-//     //     pitch: 0
-//     //   });
-//     //   panorama.setVisible(true);
-//     // });
-//   } else {
-//     console.error('Street View data not found for this location.');
-//   }
-// }
-//
-// initMap();
-  //
-
-  // let form = document.querySelector('#form');
-  // form.addEventListener('submit', geocode);
-
-
-  // function geocode(e){
-  //   e.preventDefault();
-  //   let location = document.getElementById('location-input').value;
-  //   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     console.log(res);
-  //     //Formatted address
-  //     let formattedAddress = res.results[0].formatted_address;
-  //     let formattedAddressOutput = `
-  //       <ul class="list-group">
-  //         <li class="list-group-item">${formattedAddress}</li>
-  //       </ul>
-  //     `;
-  //     //Address Components
-  //     let addressComponents = res.results[0].address_components;
-  //     let addressComponentsOutput = '<ul class="list-group">';
-  //     for(let i=0; i<addressComponents.length; i++){
-  //       addressComponentsOutput += `
-  //         <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
-  //       `;
-  //     }
-  //     addressComponentsOutput += '</ul>';
-  //
-  //     //Get Geometry
-  //     let lat = res.results[0].geometry.location.lat;
-  //     let lng = res.results[0].geometry.location.lng;
-  //     // initMap(lat, lng);
-  //     initializeStreetView(lat, lng);
-  //     let latLngOutput = `
-  //       <ul class="list-group">
-  //         <li class="list-group-item"><strong>Lat itude: </strong>${lat}</li>
-  //         <li class="list-group-item"><strong>Longtitude: </strong>${lng}</li>
-  //       </ul>
-  //     `;
-  //     //Output to App
-  //     document.querySelector('.formatted-address').innerHTML = formattedAddressOutput;
-  //     document.querySelector('.address-components').innerHTML = addressComponentsOutput;
-  //     document.querySelector('.geometry').innerHTML = latLngOutput;
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   })
-  // }
+  function deleteMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    markers = [];
+  }
 
 
 
