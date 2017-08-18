@@ -1,19 +1,19 @@
-/* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
 .map {
-  height: 50%;
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  left: -3000px;
+  bottom: 45%;
+  z-index: 2;
 }
 .street-view {
   height: 80%;
   width: 100%;
-  background-color: turquoise;
 }
 .upperPanel {
   height: 10%;
