@@ -3,7 +3,7 @@ import { roundsDatabase } from './roundsDatabase.js';
 
 export class Round {
   constructor(){
-    
+    this.shots = 10;
   }
   geocode = (nextRound) =>{
     let location = roundsDatabase[nextRound].location;
@@ -32,15 +32,15 @@ export class Round {
         let lat = res.results[0].geometry.location.lat;
         let lng = res.results[0].geometry.location.lng;
         this.initStreetView(lat, lng);
-        this.initMap(lat, lng);
+        // this.initMap(lat, lng);
 
 
     })
     .catch(err => {
       console.log(err);
     })
-
   }
+
   initStreetView = (lat, lng) =>{
     var location = {lat: lat, lng: lng};
     var panorama = new google.maps.StreetViewPanorama(
@@ -55,10 +55,8 @@ export class Round {
       center: {lat: lat, lng: lng},
       zoom: 16
     });
-    var marker = new google.maps.Marker({
-          position: {lat: lat, lng: lng},
-          map: map
-        });
   }
+
+
 
 }

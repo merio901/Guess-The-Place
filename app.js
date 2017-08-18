@@ -3,13 +3,20 @@ import { TheGame } from './src/js/gameCreator.js';
 import { checkCountry, checkCity, checkStreet } from './src/js/checkers.js';
 import { roundsDatabase } from './src/js/roundsDatabase.js';
 
-
+let theGame;
 
 document.addEventListener("DOMContentLoaded", function(){
 
+
   // CREATE NEW GAME AND GENERATE FIRST ROUND
-  let theGame = new TheGame();
+  theGame = new TheGame();
   theGame.generateRound(theGame.rounds.length);
+
+  let map = new google.maps.Map(document.querySelector('.map'), {
+    center: {lat: 0, lng: 0},
+    zoom: 2
+  });
+
 
   let skipRound = document.querySelectorAll('.skip-round');
   let formCountry = document.querySelector('.form-country');
@@ -34,12 +41,12 @@ document.addEventListener("DOMContentLoaded", function(){
           formCountry.classList.add('invisible');
           formCity.classList.remove('invisible');
           messageDiv.innerText = "Good job! Try guessing city now."
-          theGame.shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+          theGame.rounds[theGame.rounds.length-1].shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
         } else {
           messageDiv.innerText = "You're probably wrong! Try again."
-          theGame.shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+          theGame.rounds[theGame.rounds.length-1].shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
         }
       }))
     }
@@ -59,17 +66,16 @@ document.addEventListener("DOMContentLoaded", function(){
           formCity.classList.add('invisible');
           formStreet.classList.remove('invisible');
           messageDiv.innerText = "Nice! Time to guess the street."
-          theGame.shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+          theGame.rounds[theGame.rounds.length-1].shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
         } else {
           messageDiv.innerText = "Nope!"
-          theGame.shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.shots}`
+          theGame.rounds[theGame.rounds.length-1].shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
         }
       })
     }
   })
-
 
   formStreet.addEventListener('submit', function(e){
     e.preventDefault();
@@ -82,10 +88,13 @@ document.addEventListener("DOMContentLoaded", function(){
       .then(res => {
         console.log(checkStreet(formStreetVal,res));
         if(checkStreet(formStreetVal, res) === true){
-          console.log('hi');
           messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
           messageDiv.style.fontSize = "30px";
           shotsDiv.classList.add('invisible');
+
+          // TODO:
+
+          // SHOW MAP
         } else {
           messageDiv.innerText = "Try again!"
         }
@@ -99,15 +108,39 @@ document.addEventListener("DOMContentLoaded", function(){
       theGame.generateRound(theGame.rounds.length);
       console.log(theGame.rounds);
       console.log(theGame.rounds.length);
-      theGame.shots=10;
-      shotsDiv.innerText = `Shots left: ${theGame.shots}`;
+      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
       messageDiv.innerText = "Guess the country first";
       formStreet.classList.add('invisible');
       formCity.classList.add('invisible');
       formCountry.classList.remove('invisible');
+
+      if(theGame.rounds.length == 5){
+        console.log('hi');
+      }
     })
   }
 
+
+  google.maps.event.addListener(map, 'click', function(event) {
+    placeMarker(event.latLng);
+    let location = roundsDatabase[theGame.rounds.length-1].location;
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+    .then(res => res.json())
+    .then(res => {
+      let origin1 = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+      let origin2 = new google.maps.LatLng(res.results[0].geometry.location.lat, res.results[0].geometry.location.lng);
+      var heading = google.maps.geometry.spherical.computeDistanceBetween(origin1, origin2);
+      console.log(parseInt(heading));
+    })
+
+  });
+
+  function placeMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+  }
 // var skipper = document.querySelector('.skipper');
 //
 //

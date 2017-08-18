@@ -8,7 +8,7 @@ html, body {
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 .map {
-  height: 40%;
+  height: 50%;
 }
 .street-view {
   height: 80%;
@@ -17,11 +17,11 @@ html, body {
 }
 .upperPanel {
   height: 10%;
-  background-color: darkgreen;
+  background-color: #37474F;
 }
 .bottomPanel {
   height: 10%;
-  background-color: darkgreen;
+  background-color: #37474F;
 }
 .container {
   position: relative;

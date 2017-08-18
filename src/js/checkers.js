@@ -1,13 +1,11 @@
 export function checkCountry(countryToCheck, response){
   let it;
-  response.results[0].address_components.map((addressComponent)=>{
-    if(addressComponent.long_name === countryToCheck){
-      console.log('Country checked');
-      it = true;
-    } else {
-      it = false;
-    }
-  })
+  if(response.results[0].formatted_address.indexOf(countryToCheck) > 0){
+    console.log('Country checked');
+    it = true;
+  } else {
+    it = false;
+  }
   return it;
 }
 
