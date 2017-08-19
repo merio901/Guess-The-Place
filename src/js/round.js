@@ -4,8 +4,9 @@ import { roundsDatabase } from './roundsDatabase.js';
 export class Round {
   constructor(){
     this.shots = 10;
-    this.startingRoundScore = 1000;
+    this.roundScore = 1000;
     this.multiplier = 1;
+    this.distanceError = 0;
   }
   geocode = (nextRound) =>{
     let location = roundsDatabase[nextRound].location;
