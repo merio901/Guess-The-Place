@@ -7,14 +7,18 @@ import { calculateDistance, getRoundScore } from './src/js/calculate.js';
 
 
 let theGame;
+const START_SCORE = 1000;
 let markers = [];
+
+let mapDiv = document.querySelector('.map');
+let streetViewDiv = document.querySelector('.street-view');
 let skipRound = document.querySelectorAll('.skip-round');
+let endRound = document.querySelector('.end-round');
 let formCountry = document.querySelector('.form-country');
 let formCity = document.querySelector('.form-city');
 let formStreet = document.querySelector('.form-street');
 let messageDiv = document.querySelector('.message');
 let shotsDiv = document.querySelector('.shots');
-let mapDiv = document.querySelector('.map');
 
 
 
@@ -96,8 +100,8 @@ document.addEventListener("DOMContentLoaded", function(){
           shotsDiv.classList.add('invisible');
           theGame.rounds[theGame.rounds.length-1].multiplier++;
 
-          // MAP SLIDE IN
-          mapDiv.style.transition = "1s ease";
+          // MAP AND BUTTON SLIDE IN
+          mapDiv.style.transition = "0.5s ease";
           mapDiv.style.left = "30px";
         } else {
           theGame.rounds[theGame.rounds.length-1].shots--;
@@ -116,6 +120,8 @@ document.addEventListener("DOMContentLoaded", function(){
     .then(res => res.json())
     .then(res => {
 
+      endRound.style.transition = "0.5s ease";
+      endRound.style.left = "30px";
       //CHECK DISTANCE ERROR
       let origin1 = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
       let origin2 = new google.maps.LatLng(res.results[0].geometry.location.lat, res.results[0].geometry.location.lng);
@@ -125,11 +131,12 @@ document.addEventListener("DOMContentLoaded", function(){
       theGame.rounds[theGame.rounds.length-1].distanceError = calculateDistance(origin1, origin2);
 
       //CALCULATE ROUND SCORE
-      let startScore = theGame.rounds[theGame.rounds.length-1].roundScore;
       let error = theGame.rounds[theGame.rounds.length-1].distanceError;
       let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
-      theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(startScore, error, multiplier);
+      theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(START_SCORE, error, multiplier);
       console.log(theGame.rounds[theGame.rounds.length-1].roundScore);
+      theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
+
     })
   });
   function placeMarker(location) {
@@ -164,11 +171,22 @@ document.addEventListener("DOMContentLoaded", function(){
       formStreet.classList.add('invisible');
       formCity.classList.add('invisible');
       formCountry.classList.remove('invisible');
-      mapDiv.style.transition = "2s ease";
+      mapDiv.style.transition = "1s ease";
       mapDiv.style.left = "-700px";
+      endRound.style.transition = "1s ease";
+      endRound.style.left = "-700px";
       deleteMarkers();
       map.setCenter(new google.maps.LatLng(0, 0));
       map.setZoom(2);
+
+      console.log(theGame.gameScore);
     })
   }
+
+  mapDiv.addEventListener('mouseenter', function(){
+    this.style.opacity = "1";
+  })
+  streetViewDiv.addEventListener('click', function(){
+    mapDiv.style.opacity = "0.4";
+  })
 })

@@ -4,7 +4,6 @@ export function calculateDistance(origin1, origin2) {
   return heading;
 }
 
-
 export function getRoundScore(startScore, error, multiplier){
   console.log("Start score: ", startScore);
   console.log("Error: ", error);

@@ -28,13 +28,10 @@ export class Round {
   initStreetView = (lat, lng) =>{
     var location = {lat: lat, lng: lng};
     var panorama = new google.maps.StreetViewPanorama(
-        document.querySelector('.street-view'), {
-          position: location,
-          addressControl: false,
-          showRoadLabels: false
-        });
+      document.querySelector('.street-view'), {
+        position: location,
+        addressControl: false,
+        showRoadLabels: false
+      });
   }
-
-
-
 }
