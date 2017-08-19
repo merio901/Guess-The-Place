@@ -103,6 +103,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
           // SHOW MAP
         } else {
+          theGame.rounds[theGame.rounds.length-1].shots--;
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
           messageDiv.innerText = "Try again!"
         }
       })
@@ -116,12 +118,15 @@ document.addEventListener("DOMContentLoaded", function(){
       e.preventDefault();
       theGame.generateRound(theGame.rounds.length);
       console.log(theGame.rounds);
+      shotsDiv.classList.remove('invisible');
       console.log(theGame.rounds.length);
       shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
       messageDiv.innerText = "Guess the country first";
       formStreet.classList.add('invisible');
       formCity.classList.add('invisible');
       formCountry.classList.remove('invisible');
+      mapDiv.style.transition = "2s ease";
+      mapDiv.style.left = "-700px";
       deleteMarkers();
       map.setCenter(new google.maps.LatLng(0, 0));
       map.setZoom(2);
