@@ -12,7 +12,7 @@ html, body {
   z-index: 2;
   opacity: 0.4;
 }
-.end-round {
+.guess-place {
   position: absolute;
   font-size: 24px;
   background-color: rgba(0,156,0,0.5);
@@ -24,7 +24,7 @@ html, body {
   bottom: 15%;
   z-index: 2;
 }
-.end-round:hover{
+.guess-place:hover{
   background-color: rgba(0,156,0,1);
   color: #37474F;
 }
@@ -73,4 +73,42 @@ input {
 }
 .invisible {
   display: none;
+}
+.round-score {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 2;
+  width: 400px;
+  height: 500px;
+  background-color: rgba(255,255,255, 0.8);
+  border: 1px solid blue;
+  border-radius: 25px;
+  visibility: hidden;
+  opacity: 0;
+}
+h1 {
+  text-align: center;
+  margin: 20px auto;
+  font-size: 25px;
+}
+.points {
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 40px;
+  color: red;
+}
+.multipliers {
+  margin-top: 20px;
+  list-style-type: none;
+}
+.multipliers h3 span {
+  color: red;
+}
+.multipliers li {
+  margin-top: 10px;
+  font-size: 16px;
 }

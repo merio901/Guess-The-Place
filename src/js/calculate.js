@@ -9,10 +9,12 @@ export function getRoundScore(startScore, error, multiplier){
   console.log("Multiplier: ", multiplier);
   let baseScore = startScore - error;
   let resultScore = 0;
+
   if(baseScore < 0){
     resultScore = 500;
   } else {
-    resultScore = ((baseScore) * (1 + multiplier));
+    resultScore = (baseScore * multiplier);
+    console.log(baseScore);
   }
   console.log("Round score: ", parseInt(resultScore.toFixed(2)));
   return parseInt(resultScore.toFixed(2));

@@ -6,20 +6,33 @@ import { Round } from './src/js/round.js';
 import { calculateDistance, getRoundScore } from './src/js/calculate.js';
 
 
-let theGame;
 const START_SCORE = 1000;
+
+let theGame;
 let markers = [];
+
+let countryMultiplier;
+let cityMultiplier;
+let streetMultiplier;
+let pinMultiplier;
+
+let countryMultiplierLi = document.querySelector('.country-multiplier');
+let cityMultiplierLi = document.querySelector('.city-multiplier');
+let streetMultiplierLi = document.querySelector('.street-multiplier');
+let pinMultiplierLi = document.querySelector('.pin-multiplier');
+let multipliersSpan = document.querySelector('.multipliers h3 span');
 
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
 let skipRound = document.querySelectorAll('.skip-round');
-let endRound = document.querySelector('.end-round');
+let guessButton = document.querySelector('.guess-place');
 let formCountry = document.querySelector('.form-country');
 let formCity = document.querySelector('.form-city');
 let formStreet = document.querySelector('.form-street');
 let messageDiv = document.querySelector('.message');
 let shotsDiv = document.querySelector('.shots');
-
+let scoreSpan = document.querySelector('.points');
+let roundScoreDiv = document.querySelector('.round-score');
 
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -48,10 +61,12 @@ document.addEventListener("DOMContentLoaded", function(){
           theGame.rounds[theGame.rounds.length-1].shots--;
           shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
+          countryMultiplier = 1;
         } else {
           messageDiv.innerText = "You're probably wrong! Try again."
           theGame.rounds[theGame.rounds.length-1].shots--;
           shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+          countryMultiplier = 0;
         }
       }))
     }
@@ -75,10 +90,12 @@ document.addEventListener("DOMContentLoaded", function(){
           theGame.rounds[theGame.rounds.length-1].shots--;
           shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
+          cityMultiplier = 1;
         } else {
           messageDiv.innerText = "Nope!"
           theGame.rounds[theGame.rounds.length-1].shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+          cityMultiplier = 0;
         }
       })
     }
@@ -99,14 +116,17 @@ document.addEventListener("DOMContentLoaded", function(){
           messageDiv.style.fontSize = "30px";
           shotsDiv.classList.add('invisible');
           theGame.rounds[theGame.rounds.length-1].multiplier++;
+          streetMultiplier = 1;
 
           // MAP AND BUTTON SLIDE IN
           mapDiv.style.transition = "0.5s ease";
           mapDiv.style.left = "30px";
+
         } else {
           theGame.rounds[theGame.rounds.length-1].shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`
-          messageDiv.innerText = "Try again!"
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+          messageDiv.innerText = "Try again!";
+          streetMultiplier = 0;
         }
       })
     }
@@ -121,14 +141,17 @@ document.addEventListener("DOMContentLoaded", function(){
     .then(res => {
 
       //END ROUND BUTTON SLIDE IN
-      endRound.style.transition = "0.5s ease";
-      endRound.style.left = "30px";
+      guessButton.style.transition = "0.5s ease";
+      guessButton.style.left = "30px";
 
       //CHECK DISTANCE ERROR
       let origin1 = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
       let origin2 = new google.maps.LatLng(res.results[0].geometry.location.lat, res.results[0].geometry.location.lng);
       if(calculateDistance(origin1, origin2) < 50){
         theGame.rounds[theGame.rounds.length-1].multiplier = theGame.rounds[theGame.rounds.length-1].multiplier + 2;
+        pinMultiplier = 2;
+      } else {
+        pinMultiplier = 0;
       }
       theGame.rounds[theGame.rounds.length-1].distanceError = calculateDistance(origin1, origin2);
     })
@@ -153,6 +176,53 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 
+
+
+  //"THIS IS THE PLACE!"
+  guessButton.addEventListener('click', function(){
+
+    //RESET TEXT IN ROUND SUMMARY
+    multipliersSpan.innerText = "";
+    countryMultiplierLi.innerText = "";
+    cityMultiplierLi.innerText = "";
+    streetMultiplierLi.innerText = "";
+    pinMultiplierLi.innerText = "";
+
+    //CALCULATE ROUND SCORE
+    let error = theGame.rounds[theGame.rounds.length-1].distanceError;
+    let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
+    theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(START_SCORE, error, multiplier);
+    theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
+
+    //APPLY TEXT TO ROUND SUMMARY
+    if(theGame.rounds[theGame.rounds.length-1].roundScore > 500) {
+      scoreSpan.innerText = `${theGame.rounds[theGame.rounds.length-1].roundScore}`;
+      countryMultiplierLi.innerText = `Country: +${countryMultiplier}`;
+      cityMultiplierLi.innerText = `City: +${cityMultiplier}`;
+      streetMultiplierLi.innerText = `Street: +${streetMultiplier}`;
+      pinMultiplierLi.innerText = `Pin: +${pinMultiplier}`;
+    } else {
+      scoreSpan.innerText = `only ${theGame.rounds[theGame.rounds.length-1].roundScore}`;
+      multipliersSpan.innerText = `NONE! Distance error too big!`;
+    }
+
+    //SHOW ROUND SUMMARY
+    roundScoreDiv.style.visibility = "visible";
+    roundScoreDiv.style.transition = "3s ease";
+    roundScoreDiv.style.opacity = "1";
+
+
+  });
+
+  //MAP OPACITY CHANGERS
+  mapDiv.addEventListener('mouseenter', function(){
+    this.style.opacity = "1";
+  })
+  streetViewDiv.addEventListener('click', function(){
+    mapDiv.style.opacity = "0.4";
+  })
+
+
   //SKIP ROUND BUTTON (LATER END ROUND BUTTON)
   for(let i=0; i<skipRound.length; i++){
     skipRound[i].addEventListener('click', function(e){
@@ -168,34 +238,14 @@ document.addEventListener("DOMContentLoaded", function(){
       formCountry.classList.remove('invisible');
       mapDiv.style.transition = "1s ease";
       mapDiv.style.left = "-700px";
-      endRound.style.transition = "1s ease";
-      endRound.style.left = "-700px";
+      guessButton.style.transition = "1s ease";
+      guessButton.style.left = "-700px";
       deleteMarkers();
       map.setCenter(new google.maps.LatLng(0, 0));
       map.setZoom(2);
       console.log(theGame.gameScore);
     });
   }
-
-  //END ROUND BUTTON (THIS IS THE PLACE!)
-  endRound.addEventListener('click', function(){
-
-    //CALCULATE ROUND SCORE
-    let error = theGame.rounds[theGame.rounds.length-1].distanceError;
-    let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
-    theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
-    theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(START_SCORE, error, multiplier);
-
-    
-  });
-
-  //MAP OPACITY CHANGERS
-  mapDiv.addEventListener('mouseenter', function(){
-    this.style.opacity = "1";
-  })
-  streetViewDiv.addEventListener('click', function(){
-    mapDiv.style.opacity = "0.4";
-  })
 
 
 
