@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function(){
   //COUNTRY FORM
   formCountry.addEventListener('submit', function(e){
     e.preventDefault();
-    let formCountryVal = document.querySelector('.location-country').value;
+    let formCountryVal = formCountry.querySelector('input').value;
 
     if(formCountry.className != 'invisible') {
       let location = roundsDatabase[theGame.rounds.length-1].location;
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function(){
   //CITY FORM
   formCity.addEventListener('submit', function(e){
     e.preventDefault();
-    let formCityVal = document.querySelector('.location-city').value;
+    let formCityVal = formCity.querySelector('input').value;
 
     if(formCity.className != 'invisible') {
       let location = roundsDatabase[theGame.rounds.length-1].location;
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function(){
   //STREET FORM
   formStreet.addEventListener('submit', function(e){
     e.preventDefault();
-    let formStreetVal = document.querySelector('.location-street').value;
+    let formStreetVal = formStreet.querySelector('input').value;
     if(formStreet.className != 'invisible') {
       let location = roundsDatabase[theGame.rounds.length-1].location;
       fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
@@ -244,6 +244,12 @@ document.addEventListener("DOMContentLoaded", function(){
       map.setCenter(new google.maps.LatLng(0, 0));
       map.setZoom(2);
       console.log(theGame.gameScore);
+      formCountry.querySelector('input').value = "";
+      formCity.querySelector('input').value = "";
+      formStreet.querySelector('input').value = "";
+      roundScoreDiv.style.transition = "1s ease";
+      roundScoreDiv.style.opacity = "0";
+      roundScoreDiv.style.visibility = "hidden";
     });
   }
 
