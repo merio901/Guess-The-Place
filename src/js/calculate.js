@@ -1,6 +1,5 @@
 export function calculateDistance(origin1, origin2) {
   let heading = google.maps.geometry.spherical.computeDistanceBetween(origin1, origin2);
-  console.log(parseInt(heading));
   return heading;
 }
 
@@ -11,9 +10,10 @@ export function getRoundScore(startScore, error, multiplier){
   let baseScore = startScore - error;
   let resultScore = 0;
   if(baseScore < 0){
-    resultScore = 0;
+    resultScore = 500;
   } else {
     resultScore = ((baseScore) * (1 + multiplier));
   }
+  console.log("Round score: ", parseInt(resultScore.toFixed(2)));
   return parseInt(resultScore.toFixed(2));
 }

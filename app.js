@@ -120,8 +120,10 @@ document.addEventListener("DOMContentLoaded", function(){
     .then(res => res.json())
     .then(res => {
 
+      //END ROUND BUTTON SLIDE IN
       endRound.style.transition = "0.5s ease";
       endRound.style.left = "30px";
+
       //CHECK DISTANCE ERROR
       let origin1 = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
       let origin2 = new google.maps.LatLng(res.results[0].geometry.location.lat, res.results[0].geometry.location.lng);
@@ -129,16 +131,9 @@ document.addEventListener("DOMContentLoaded", function(){
         theGame.rounds[theGame.rounds.length-1].multiplier = theGame.rounds[theGame.rounds.length-1].multiplier + 2;
       }
       theGame.rounds[theGame.rounds.length-1].distanceError = calculateDistance(origin1, origin2);
-
-      //CALCULATE ROUND SCORE
-      let error = theGame.rounds[theGame.rounds.length-1].distanceError;
-      let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
-      theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(START_SCORE, error, multiplier);
-      console.log(theGame.rounds[theGame.rounds.length-1].roundScore);
-      theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
-
     })
   });
+
   function placeMarker(location) {
     var marker = new google.maps.Marker({
         position: location,
@@ -178,15 +173,30 @@ document.addEventListener("DOMContentLoaded", function(){
       deleteMarkers();
       map.setCenter(new google.maps.LatLng(0, 0));
       map.setZoom(2);
-
       console.log(theGame.gameScore);
-    })
+    });
   }
 
+  //END ROUND BUTTON (THIS IS THE PLACE!)
+  endRound.addEventListener('click', function(){
+
+    //CALCULATE ROUND SCORE
+    let error = theGame.rounds[theGame.rounds.length-1].distanceError;
+    let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
+    theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
+    theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(START_SCORE, error, multiplier);
+
+    
+  });
+
+  //MAP OPACITY CHANGERS
   mapDiv.addEventListener('mouseenter', function(){
     this.style.opacity = "1";
   })
   streetViewDiv.addEventListener('click', function(){
     mapDiv.style.opacity = "0.4";
   })
+
+
+
 })
