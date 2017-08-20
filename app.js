@@ -6,7 +6,7 @@ import { Round } from './src/js/round.js';
 import { calculateDistance, getRoundScore } from './src/js/calculate.js';
 
 
-const START_SCORE = 1000;
+
 
 let theGame;
 let markers = [];
@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function(){
         } else {
           messageDiv.innerText = "You're probably wrong! Try again."
           theGame.rounds[theGame.rounds.length-1].shots--;
+          theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
           shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
           countryMultiplier = 0;
         }
@@ -94,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function(){
         } else {
           messageDiv.innerText = "Nope!"
           theGame.rounds[theGame.rounds.length-1].shots--;
+          theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
           shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
           cityMultiplier = 0;
         }
@@ -124,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
         } else {
           theGame.rounds[theGame.rounds.length-1].shots--;
+          theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
           shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
           messageDiv.innerText = "Try again!";
           streetMultiplier = 0;
@@ -178,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 
-  //"THIS IS THE PLACE!"
+  //"THIS IS THE PLACE!" BUTTON
   guessButton.addEventListener('click', function(){
 
     //RESET TEXT IN ROUND SUMMARY
@@ -189,9 +192,11 @@ document.addEventListener("DOMContentLoaded", function(){
     pinMultiplierLi.innerText = "";
 
     //CALCULATE ROUND SCORE
+    let startScore = theGame.rounds[theGame.rounds.length-1].roundScore;
     let error = theGame.rounds[theGame.rounds.length-1].distanceError;
     let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
-    theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(START_SCORE, error, multiplier);
+    console.log("START SCORE: ", theGame.rounds[theGame.rounds.length-1].roundScore);
+    theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(startScore, error, multiplier);
     theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
 
     //APPLY TEXT TO ROUND SUMMARY
