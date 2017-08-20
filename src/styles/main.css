@@ -112,3 +112,12 @@ h1 {
   margin-top: 10px;
   font-size: 16px;
 }
+.next-round {
+  font-size: 25px;
+  position: absolute;
+  left: 125px;
+  bottom: 25px;
+  border: none;
+  background-color: rgba(255,255,255, 0);
+  border-bottom: 2px solid blue;
+}

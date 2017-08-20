@@ -24,7 +24,7 @@ let multipliersSpan = document.querySelector('.multipliers h3 span');
 
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
-let skipRound = document.querySelectorAll('.skip-round');
+let nextRound = document.querySelector('.next-round');
 let guessButton = document.querySelector('.guess-place');
 let formCountry = document.querySelector('.form-country');
 let formCity = document.querySelector('.form-city');
@@ -195,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function(){
     let startScore = theGame.rounds[theGame.rounds.length-1].roundScore;
     let error = theGame.rounds[theGame.rounds.length-1].distanceError;
     let multiplier = theGame.rounds[theGame.rounds.length-1].multiplier;
-    console.log("START SCORE: ", theGame.rounds[theGame.rounds.length-1].roundScore);
     theGame.rounds[theGame.rounds.length-1].roundScore = getRoundScore(startScore, error, multiplier);
     theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
 
@@ -215,9 +214,8 @@ document.addEventListener("DOMContentLoaded", function(){
     roundScoreDiv.style.visibility = "visible";
     roundScoreDiv.style.transition = "3s ease";
     roundScoreDiv.style.opacity = "1";
-
-
   });
+
 
   //MAP OPACITY CHANGERS
   mapDiv.addEventListener('mouseenter', function(){
@@ -228,36 +226,34 @@ document.addEventListener("DOMContentLoaded", function(){
   })
 
 
-  //SKIP ROUND BUTTON (LATER END ROUND BUTTON)
-  for(let i=0; i<skipRound.length; i++){
-    skipRound[i].addEventListener('click', function(e){
-      e.preventDefault();
-      theGame.generateRound(theGame.rounds.length);
-      console.log(theGame.rounds);
-      shotsDiv.classList.remove('invisible');
-      console.log(theGame.rounds.length);
-      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
-      messageDiv.innerText = "Guess the country first";
-      formStreet.classList.add('invisible');
-      formCity.classList.add('invisible');
-      formCountry.classList.remove('invisible');
-      mapDiv.style.transition = "1s ease";
-      mapDiv.style.left = "-700px";
-      guessButton.style.transition = "1s ease";
-      guessButton.style.left = "-700px";
-      deleteMarkers();
-      map.setCenter(new google.maps.LatLng(0, 0));
-      map.setZoom(2);
-      console.log(theGame.gameScore);
-      formCountry.querySelector('input').value = "";
-      formCity.querySelector('input').value = "";
-      formStreet.querySelector('input').value = "";
-      roundScoreDiv.style.transition = "1s ease";
-      roundScoreDiv.style.opacity = "0";
-      roundScoreDiv.style.visibility = "hidden";
-    });
-  }
+  //NEXT ROUND BUTTON
+  nextRound.addEventListener('click', function(){
+    theGame.generateRound(theGame.rounds.length);
+    console.log(theGame.rounds);
+    shotsDiv.classList.remove('invisible');
+    console.log(theGame.rounds.length);
+    shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+    messageDiv.innerText = "Guess the country first";
+    formStreet.classList.add('invisible');
+    formCity.classList.add('invisible');
+    formCountry.classList.remove('invisible');
+    mapDiv.style.transition = "1s ease";
+    mapDiv.style.left = "-700px";
+    guessButton.style.transition = "1s ease";
+    guessButton.style.left = "-700px";
+    deleteMarkers();
+    map.setCenter(new google.maps.LatLng(0, 0));
+    map.setZoom(2);
+    console.log(theGame.gameScore);
+    formCountry.querySelector('input').value = "";
+    formCity.querySelector('input').value = "";
+    formStreet.querySelector('input').value = "";
+    roundScoreDiv.style.transition = "1s ease";
+    roundScoreDiv.style.opacity = "0";
+    roundScoreDiv.style.visibility = "hidden";
+  })
 
+  
 
 
 })
