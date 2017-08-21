@@ -24,6 +24,7 @@ let multipliersSpan = document.querySelector('.multipliers h3 span');
 
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
+let skipButton = document.querySelectorAll('.skip-button');
 let nextRound = document.querySelector('.next-round');
 let guessButton = document.querySelector('.guess-place');
 let formCountry = document.querySelector('.form-country');
@@ -33,6 +34,39 @@ let messageDiv = document.querySelector('.message');
 let shotsDiv = document.querySelector('.shots');
 let scoreSpan = document.querySelector('.points');
 let roundScoreDiv = document.querySelector('.round-score');
+
+let actualCountry = document.querySelector('.actual-country');
+let actualCity = document.querySelector('.actual-city');
+let actualStreet = document.querySelector('.actual-street');
+
+
+function switchToCity(){
+  formCountry.classList.add('invisible');
+  formCity.classList.remove('invisible');
+  messageDiv.innerText = "Good job! Try guessing city now.";
+  theGame.rounds[theGame.rounds.length-1].shots--;
+  shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+  countryMultiplier = 0;
+}
+function switchToStreet(){
+  formCity.classList.add('invisible');
+  formStreet.classList.remove('invisible');
+  messageDiv.innerText = "Nice! Time to guess the street."
+  theGame.rounds[theGame.rounds.length-1].shots--;
+  shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+  cityMultiplier = 0;
+}
+function switchToPin(){
+  messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
+  theGame.rounds[theGame.rounds.length-1].shots--;
+  shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+  // MAP AND BUTTON SLIDE IN
+  mapDiv.style.transition = "0.5s ease";
+  mapDiv.style.left = "30px";
+  streetMultiplier = 0;
+  formStreet.querySelector('input').setAttribute("disabled", "true");
+}
+
 
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -55,13 +89,10 @@ document.addEventListener("DOMContentLoaded", function(){
       .then(res => res.json()
       .then(res => {
         if(checkCountry(formCountryVal, res) === true){
-          formCountry.classList.add('invisible');
-          formCity.classList.remove('invisible');
-          messageDiv.innerText = "Good job! Try guessing city now.";
-          theGame.rounds[theGame.rounds.length-1].shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
-          theGame.rounds[theGame.rounds.length-1].multiplier++;
+          switchToCity();
+          actualCountry.innerText = `Country: ${formCountryVal}`;
           countryMultiplier = 1;
+          theGame.rounds[theGame.rounds.length-1].multiplier++;
         } else {
           messageDiv.innerText = "You're probably wrong! Try again."
           theGame.rounds[theGame.rounds.length-1].shots--;
@@ -84,12 +115,8 @@ document.addEventListener("DOMContentLoaded", function(){
       .then(res => res.json())
       .then(res => {
         if(checkCity(formCityVal, res) === true){
-          theGame.multiplier++;
-          formCity.classList.add('invisible');
-          formStreet.classList.remove('invisible');
-          messageDiv.innerText = "Nice! Time to guess the street."
-          theGame.rounds[theGame.rounds.length-1].shots--;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+          switchToStreet();
+          actualCity.innerText = `City: ${formCityVal}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
           cityMultiplier = 1;
         } else {
@@ -113,17 +140,10 @@ document.addEventListener("DOMContentLoaded", function(){
       .then(res => res.json())
       .then(res => {
         if(checkStreet(formStreetVal, res) === true){
-          theGame.multiplier++;
-          messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
-          messageDiv.style.fontSize = "30px";
-          shotsDiv.classList.add('invisible');
+          switchToPin();
+          actualStreet.innerText = `Street: ${formStreetVal}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
           streetMultiplier = 1;
-
-          // MAP AND BUTTON SLIDE IN
-          mapDiv.style.transition = "0.5s ease";
-          mapDiv.style.left = "30px";
-
         } else {
           theGame.rounds[theGame.rounds.length-1].shots--;
           theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
@@ -142,6 +162,8 @@ document.addEventListener("DOMContentLoaded", function(){
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
     .then(res => res.json())
     .then(res => {
+      theGame.rounds[theGame.rounds.length-1].shots--;
+      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
       //END ROUND BUTTON SLIDE IN
       guessButton.style.transition = "0.5s ease";
@@ -174,11 +196,39 @@ document.addEventListener("DOMContentLoaded", function(){
     markers = [];
   }
 
-  // TODO:
+
   //SKIP PRECISION LEVEL
+  for (var i = 0; i < skipButton.length; i++) {
+    skipButton[i].addEventListener('click', function(){
+      let location = roundsDatabase[theGame.rounds.length-1].location;
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+      .then(res => res.json())
+      .then(res => {
+        let address = [];
+        address = res.results[0].formatted_address.split(',');
+        console.log(address);
 
 
+        if(!formCountry.classList.contains('invisible')){
+          switchToCity();
+          actualCountry.innerText = `Country: ${address[address.length-1]}`;
+        }
+        else if(!formCity.classList.contains('invisible')){
+          switchToStreet();
+          if(address.length === 4){
+            actualCity.innerText = `City: ${address[1]}, ${address[2]}`;
+          } else {
+            actualCity.innerText = `City: ${address[1]}`;
+          }
+        }
+        else if(!formStreet.classList.contains('invisible')){
+          switchToPin();
+          actualStreet.innerText = `Street: ${address[0]}`;
+        }
+      })
 
+    })
+  }
 
 
   //"THIS IS THE PLACE!" BUTTON
@@ -207,7 +257,9 @@ document.addEventListener("DOMContentLoaded", function(){
       pinMultiplierLi.innerText = `Pin: +${pinMultiplier}`;
     } else {
       scoreSpan.innerText = `only ${theGame.rounds[theGame.rounds.length-1].roundScore}`;
-      multipliersSpan.innerText = `NONE! Distance error too big!`;
+      multipliersSpan.innerText = `NONE!
+
+        Distance error too big!`;
     }
 
     //SHOW ROUND SUMMARY
@@ -229,9 +281,7 @@ document.addEventListener("DOMContentLoaded", function(){
   //NEXT ROUND BUTTON
   nextRound.addEventListener('click', function(){
     theGame.generateRound(theGame.rounds.length);
-    console.log(theGame.rounds);
     shotsDiv.classList.remove('invisible');
-    console.log(theGame.rounds.length);
     shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
     messageDiv.innerText = "Guess the country first";
     formStreet.classList.add('invisible');
@@ -244,16 +294,23 @@ document.addEventListener("DOMContentLoaded", function(){
     deleteMarkers();
     map.setCenter(new google.maps.LatLng(0, 0));
     map.setZoom(2);
-    console.log(theGame.gameScore);
-    formCountry.querySelector('input').value = "";
-    formCity.querySelector('input').value = "";
-    formStreet.querySelector('input').value = "";
     roundScoreDiv.style.transition = "1s ease";
     roundScoreDiv.style.opacity = "0";
     roundScoreDiv.style.visibility = "hidden";
+    formStreet.querySelector('input').removeAttribute("disabled");
+    formCountry.querySelector('input').value = "";
+    formCity.querySelector('input').value = "";
+    formStreet.querySelector('input').value = "";
+    actualCountry.innerText = "Country:";
+    actualCity.innerText = "City:";
+    actualStreet.innerText = "Street:";
+
+    console.log(theGame.rounds);
+    console.log("theGame.rounds.length: ",theGame.rounds.length);
+    console.log(theGame.gameScore);
   })
 
-  
+
 
 
 })
