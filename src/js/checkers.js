@@ -1,6 +1,9 @@
 export function checkCountry(countryToCheck, response){
   let it;
-  if(response.results[0].formatted_address.indexOf(countryToCheck) > 0){
+  let address = [];
+  address = response.results[0].formatted_address.split(",");
+
+  if(address[address.length-1].indexOf(countryToCheck) > 0){
     console.log('Country checked');
     it = true;
   } else {
@@ -11,6 +14,7 @@ export function checkCountry(countryToCheck, response){
 
 export function checkCity(cityToCheck, response){
   let it;
+
   if(response.results[0].formatted_address.indexOf(cityToCheck) > 0){
     console.log('City checked');
     it = true;
@@ -22,7 +26,10 @@ export function checkCity(cityToCheck, response){
 
 export function checkStreet(streetToCheck, response){
   let it;
-  if(response.results[0].formatted_address.indexOf(streetToCheck) >= 0){
+  let address = [];
+  address = response.results[0].formatted_address.split(",");
+
+  if(address[0].indexOf(streetToCheck) >= 0){
     console.log('Street checked');
     it = true;
   } else {

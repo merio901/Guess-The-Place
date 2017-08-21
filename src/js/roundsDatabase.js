@@ -9,7 +9,7 @@ export const roundsDatabase = [
     location: "OldFordRd London England"
   },
   {
-    location: "WallStreet New York USA"
+    location: "Wall St New York USA"
   },
   {
     location: "Świętokrzyska Warsaw Poland"

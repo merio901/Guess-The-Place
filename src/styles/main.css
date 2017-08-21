@@ -36,16 +36,29 @@ html, body {
   height: 10%;
   background-color: #37474F;
 }
+.upperPanel .position {
+  color: white;
+}
 .bottomPanel {
   height: 10%;
   background-color: #37474F;
 }
 .container {
   position: relative;
+  width: 1200px;
+  margin: 0 auto;
 }
 .form {
   width: 100%;
-  font-size: 30px;
+  font-size: 20px;
+  height: 50px;
+}
+.form button {
+  background-color: #37474F;
+  color: springgreen;
+  border: none;
+  font-size: 20px;
+  line-height: 50px;
 }
 label {
   color: white;
@@ -54,9 +67,15 @@ input {
   width: 500px;
   color: black;
 }
+.skip-button {
+  cursor: pointer;
+  font-size: 20px;
+  color: lightblue;
+  line-height: 50px;
+}
 .message {
   color: white;
-  font-size: 35px;
+  font-size: 25px;
   display: inline-block;
   margin: auto;
   width: 800px;
@@ -67,7 +86,7 @@ input {
 }
 .shots {
   color: white;
-  font-size: 40px;
+  font-size: 25px;
   position: absolute;
   right: 200px;
 }
