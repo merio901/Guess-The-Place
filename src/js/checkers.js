@@ -3,7 +3,7 @@ export function checkCountry(countryToCheck, response){
   let address = [];
   address = response.results[0].formatted_address.split(",");
 
-  if(address[address.length-1].indexOf(countryToCheck) > 0){
+  if(address[address.length-1].indexOf(countryToCheck) > -1){
     console.log('Country checked');
     it = true;
   } else {
@@ -29,7 +29,7 @@ export function checkStreet(streetToCheck, response){
   let address = [];
   address = response.results[0].formatted_address.split(",");
 
-  if(address[0].indexOf(streetToCheck) >= 0){
+  if(address[0].indexOf(streetToCheck) > -1){
     console.log('Street checked');
     it = true;
   } else {

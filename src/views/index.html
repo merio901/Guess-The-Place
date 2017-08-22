@@ -27,36 +27,38 @@
 
     <div class="bottomPanel">
       <div class="container">
-        <form class="form form-country">
-          <label class="country">Enter country:
-            <input type="text" class="location-country" value=""></input>
-          </label>
-          <button type="submit" class="submit-button">Submit</button>
-          <span class="skip-button">Skip country</span>
-        </form>
-
-        <form class="form form-city invisible">
-          <label class="city">Enter city:
-            <input type="text" class="location-city" value=""></input>
-          </label>
-          <button type="submit" class="submit-button">Submit</button>
-          <span class="skip-button">Skip city</span>
-        </form>
-
-        <form class="form form-street invisible">
-          <label class="street">Enter street:
-            <input type="text" class="location-street" value=""></input>
-          </label>
-          <button type="submit" class="submit-button">Submit</button>
-          <span class="skip-button">Skip street</span>
-        </form>
-        
-        <div class="message">Guess the country first</div>
-        <div class="shots">Shots left: 10</div>
+          <form class="form form-country">
+            <label class="country">Enter country:
+              <input type="text" class="location-country" value=""></input>
+            </label>
+            <button type="submit" class="submit-button">Submit</button>
+            <span class="skip-button">Skip country</span>
+          </form>
+          <form class="form form-city invisible">
+            <label class="city">Enter city:
+              <input type="text" class="location-city" value=""></input>
+            </label>
+            <button type="submit" class="submit-button">Submit</button>
+            <span class="skip-button">Skip city</span>
+          </form>
+          <form class="form form-street invisible">
+            <label class="street">Enter street:
+              <input type="text" class="location-street" value=""></input>
+            </label>
+            <button type="submit" class="submit-button">Submit</button>
+            <span class="skip-button">Skip street</span>
+          </form>
+        <div class="message-restart-shots">
+          <div class="message">Guess the country first</div>
+          <div class="restart">Move to start</div>
+          <div class="shots">Shots left: 10</div>
+        </div>
       </div>
     </div>
+
     <div class="map"></div>
     <button class="guess-place">This is the place!</button>
+
     <div class="round-score">
       <h1>You've earned</h1>
       <p class="points"></p>

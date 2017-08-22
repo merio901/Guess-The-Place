@@ -27,6 +27,7 @@ let streetViewDiv = document.querySelector('.street-view');
 let skipButton = document.querySelectorAll('.skip-button');
 let nextRound = document.querySelector('.next-round');
 let guessButton = document.querySelector('.guess-place');
+let moveToStart = document.querySelector('.restart');
 let formCountry = document.querySelector('.form-country');
 let formCity = document.querySelector('.form-city');
 let formStreet = document.querySelector('.form-street');
@@ -196,6 +197,18 @@ document.addEventListener("DOMContentLoaded", function(){
     markers = [];
   }
 
+
+  //HANDLE MOVE TO START BUTTON
+  moveToStart.addEventListener('click', function(){
+    let location = roundsDatabase[theGame.rounds.length-1].location;
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
+    .then(res => res.json()
+    .then(res => {
+      let lat = res.results[0].geometry.location.lat;
+      let lng = res.results[0].geometry.location.lng;
+      theGame.rounds[theGame.rounds.length-1].initStreetView(lat,lng);
+    }))
+  })
 
   //SKIP PRECISION LEVEL
   for (var i = 0; i < skipButton.length; i++) {
