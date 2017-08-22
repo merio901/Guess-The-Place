@@ -11,7 +11,7 @@ export function getRoundScore(startScore, error, multiplier){
   let resultScore = 0;
 
   if(baseScore < 0){
-    resultScore = 500;
+    resultScore = 200;
   } else {
     resultScore = (baseScore * multiplier);
     console.log(baseScore);

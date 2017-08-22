@@ -35,6 +35,7 @@ let messageDiv = document.querySelector('.message');
 let shotsDiv = document.querySelector('.shots');
 let scoreSpan = document.querySelector('.points');
 let roundScoreDiv = document.querySelector('.round-score');
+let errorHeader = document.querySelector('.error');
 
 let actualCountry = document.querySelector('.actual-country');
 let actualCity = document.querySelector('.actual-city');
@@ -77,7 +78,8 @@ document.addEventListener("DOMContentLoaded", function(){
   theGame.generateRound(theGame.rounds.length);
   let map = new google.maps.Map(document.querySelector('.map'), {
     center: {lat: 0, lng: 0},
-    zoom: 2
+    zoom: 2,
+    zoomControl: false
   });
   //COUNTRY FORM
   formCountry.addEventListener('submit', function(e){
@@ -140,8 +142,13 @@ document.addEventListener("DOMContentLoaded", function(){
       fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
       .then(res => res.json())
       .then(res => {
+        let lat = res.results[0].geometry.location.lat;
+        let lng = res.results[0].geometry.location.lng;
+
         if(checkStreet(formStreetVal, res) === true){
           switchToPin();
+          map.setCenter({lat: lat, lng: lng});
+          map.setZoom(15);
           actualStreet.innerText = `Street: ${formStreetVal}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
           streetMultiplier = 1;
@@ -158,7 +165,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //HANDLE CLICK ON MAP
   google.maps.event.addListener(map, 'click', function(event) {
-    placeMarker(event.latLng);
+    if(markers.length == 0){
+      placeMarker(event.latLng);
+
+
     let location = roundsDatabase[theGame.rounds.length-1].location;
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
     .then(res => res.json())
@@ -181,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function(){
       }
       theGame.rounds[theGame.rounds.length-1].distanceError = calculateDistance(origin1, origin2);
     })
+  }
   });
 
   function placeMarker(location) {
@@ -219,8 +230,9 @@ document.addEventListener("DOMContentLoaded", function(){
       .then(res => {
         let address = [];
         address = res.results[0].formatted_address.split(',');
+        let lat = res.results[0].geometry.location.lat;
+        let lng = res.results[0].geometry.location.lng;
         console.log(address);
-
 
         if(!formCountry.classList.contains('invisible')){
           switchToCity();
@@ -236,6 +248,8 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         else if(!formStreet.classList.contains('invisible')){
           switchToPin();
+          map.setCenter({lat: lat, lng: lng});
+          map.setZoom(14);
           actualStreet.innerText = `Street: ${address[0]}`;
         }
       })
@@ -262,17 +276,20 @@ document.addEventListener("DOMContentLoaded", function(){
     theGame.gameScore += theGame.rounds[theGame.rounds.length-1].roundScore;
 
     //APPLY TEXT TO ROUND SUMMARY
-    if(theGame.rounds[theGame.rounds.length-1].roundScore > 500) {
+    if(theGame.rounds[theGame.rounds.length-1].roundScore > 200) {
+      errorHeader.innerText = `Error: ${error.toFixed(1)}m`
       scoreSpan.innerText = `${theGame.rounds[theGame.rounds.length-1].roundScore}`;
       countryMultiplierLi.innerText = `Country: +${countryMultiplier}`;
       cityMultiplierLi.innerText = `City: +${cityMultiplier}`;
       streetMultiplierLi.innerText = `Street: +${streetMultiplier}`;
-      pinMultiplierLi.innerText = `Pin: +${pinMultiplier}`;
+      pinMultiplierLi.innerText = `Pin(error must be < 50m): +${pinMultiplier}`;
     } else {
       scoreSpan.innerText = `only ${theGame.rounds[theGame.rounds.length-1].roundScore}`;
       multipliersSpan.innerText = `NONE!
 
-        Distance error too big!`;
+        Distance error too big!
+
+        ${error.toFixed(1)} meters.`;
     }
 
     //SHOW ROUND SUMMARY
@@ -306,7 +323,6 @@ document.addEventListener("DOMContentLoaded", function(){
     guessButton.style.left = "-700px";
     deleteMarkers();
     map.setCenter(new google.maps.LatLng(0, 0));
-    map.setZoom(2);
     roundScoreDiv.style.transition = "1s ease";
     roundScoreDiv.style.opacity = "0";
     roundScoreDiv.style.visibility = "hidden";
@@ -317,6 +333,7 @@ document.addEventListener("DOMContentLoaded", function(){
     actualCountry.innerText = "Country:";
     actualCity.innerText = "City:";
     actualStreet.innerText = "Street:";
+    errorHeader.innerText = "";
 
     console.log(theGame.rounds);
     console.log("theGame.rounds.length: ",theGame.rounds.length);
