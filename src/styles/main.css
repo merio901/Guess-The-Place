@@ -60,8 +60,11 @@ html, body {
   color: springgreen;
   border: none;
   font-size: 20px;
-  margin: 0 20px;
-
+  margin: 0 40px;
+  letter-spacing: 2px;
+}
+.form .submit-button:hover {
+  color: yellow;
 }
 label {
   color: white;
@@ -81,6 +84,9 @@ input {
   font-size: 20px;
   color: lightblue;
   line-height: 50px;
+}
+.skip-button:hover {
+  color: yellow;
 }
 .message-restart-shots {
   display: flex;
