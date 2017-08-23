@@ -22,6 +22,8 @@ let streetMultiplierLi = document.querySelector('.street-multiplier');
 let pinMultiplierLi = document.querySelector('.pin-multiplier');
 let multipliersSpan = document.querySelector('.multipliers h3 span');
 
+let helloScreen = document.querySelector('.hello-screen');
+let helloMsg = document.querySelector('.hello-msg');
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
 let skipButton = document.querySelectorAll('.skip-button');
@@ -89,6 +91,13 @@ function bonusDisappear(){
 
 document.addEventListener("DOMContentLoaded", function(){
 
+  //REMOVE HELLO SCREEN
+  helloMsg.addEventListener('click', function(){
+    helloScreen.style.transition = "2.5s ease";
+    helloScreen.style.left = "-2000px";
+    helloScreen.style.opacity= "0";
+    helloScreen.style.visibility = "hidden";
+  })
   // CREATE NEW GAME AND GENERATE FIRST ROUND
   theGame = new TheGame();
   theGame.generateRound(theGame.rounds.length);

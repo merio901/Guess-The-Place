@@ -4,6 +4,23 @@ html, body {
   padding: 0;
   box-sizing: border-box;
 }
+.hello-screen {
+  width: 100vw;
+  height: 100vh;
+  visibility: visible;
+  z-index: 5;
+  position: absolute;
+  left: 0;
+  background-color: #37474F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hello-msg {
+  color: springgreen;
+  cursor: pointer;
+  font-size: 24px;
+}
 .map {
   position: absolute;
   height: 400px;
