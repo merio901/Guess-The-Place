@@ -292,10 +292,15 @@ document.addEventListener("DOMContentLoaded", function(){
         ${error.toFixed(1)} meters.`;
     }
 
-    //SHOW ROUND SUMMARY
+    //SHOW ROUND SUMMARY AND HIDE MAP
     roundScoreDiv.style.visibility = "visible";
     roundScoreDiv.style.transition = "3s ease";
     roundScoreDiv.style.opacity = "1";
+
+    mapDiv.style.transition = "1s ease";
+    mapDiv.style.left = "-700px";
+    guessButton.style.transition = "1s ease";
+    guessButton.style.left = "-700px";
   });
 
 
