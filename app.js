@@ -36,6 +36,7 @@ let shotsDiv = document.querySelector('.shots');
 let scoreSpan = document.querySelector('.points');
 let roundScoreDiv = document.querySelector('.round-score');
 let errorHeader = document.querySelector('.error');
+let bonusDiv = document.querySelector('.bonus');
 
 let actualCountry = document.querySelector('.actual-country');
 let actualCity = document.querySelector('.actual-city');
@@ -68,8 +69,23 @@ function switchToPin(){
   streetMultiplier = 0;
   formStreet.querySelector('input').setAttribute("disabled", "true");
 }
-
-
+function bonusAppear(bonus){
+  bonusDiv.innerText = `+${bonus}`;
+  bonusDiv.style.visibility = "visible";
+  bonusDiv.style.transition = "0.3s ease";
+  bonusDiv.style.fontSize = "150px";
+  bonusDiv.style.opacity = "1";
+}
+function bonusDisappear(){
+  let disappear = setTimeout(function(){
+    bonusDiv.style.transition = "1s ease";
+    bonusDiv.style.opacity = "0";
+    bonusDiv.style.visibility = "hidden";
+  }, 200);
+  let changeFont = setTimeout(function(){
+    bonusDiv.style.fontSize = "50px";
+  }, 500);
+}
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -81,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function(){
     zoom: 2,
     zoomControl: false
   });
+
   //COUNTRY FORM
   formCountry.addEventListener('submit', function(e){
     e.preventDefault();
@@ -96,6 +113,8 @@ document.addEventListener("DOMContentLoaded", function(){
           actualCountry.innerText = `Country: ${formCountryVal}`;
           countryMultiplier = 1;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
+          bonusAppear(1);
+          bonusDisappear();
         } else {
           messageDiv.innerText = "You're probably wrong! Try again."
           theGame.rounds[theGame.rounds.length-1].shots--;
@@ -122,6 +141,8 @@ document.addEventListener("DOMContentLoaded", function(){
           actualCity.innerText = `City: ${formCityVal}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
           cityMultiplier = 1;
+          bonusAppear(1);
+          bonusDisappear();
         } else {
           messageDiv.innerText = "Nope!"
           theGame.rounds[theGame.rounds.length-1].shots--;
@@ -152,6 +173,8 @@ document.addEventListener("DOMContentLoaded", function(){
           actualStreet.innerText = `Street: ${formStreetVal}`;
           theGame.rounds[theGame.rounds.length-1].multiplier++;
           streetMultiplier = 1;
+          bonusAppear(1);
+          bonusDisappear();
         } else {
           theGame.rounds[theGame.rounds.length-1].shots--;
           theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
@@ -186,6 +209,8 @@ document.addEventListener("DOMContentLoaded", function(){
       if(calculateDistance(origin1, origin2) < 50){
         theGame.rounds[theGame.rounds.length-1].multiplier = theGame.rounds[theGame.rounds.length-1].multiplier + 2;
         pinMultiplier = 2;
+        bonusAppear(2);
+        bonusDisappear();
       } else {
         pinMultiplier = 0;
       }
