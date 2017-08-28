@@ -9,21 +9,24 @@ export class Round {
     this.distanceError = 0;
   }
   geocode = (nextRound) =>{
-    let location = roundsDatabase[nextRound].location;
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&libraries=places`)
+    for(let i = 0; i<roundsDatabase.length; i++){
+      let location = roundsDatabase[i].location;
+
+    fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json())
     .then(res => {
-      console.log("Response from API: ", res);
+      console.log("Res number: " + i, res.results[0].components.road);
 
       // GET GEOMETRY THEN INIT STREETVIEW
-      let lat = res.results[0].geometry.location.lat;
-      let lng = res.results[0].geometry.location.lng;
-      this.initStreetView(lat, lng);
+      // let lat = res.results[0].geometry.lat;
+      // let lng = res.results[0].geometry.lng;
+      // this.initStreetView(lat, lng);
 
     })
     .catch(err => {
       console.log(err);
     })
+  }
   }
   initStreetView = (lat, lng) =>{
     var location = {lat: lat, lng: lng};
