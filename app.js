@@ -3,13 +3,14 @@ import { TheGame } from './src/js/gameCreator.js';
 import { checkCountry, checkCity, checkStreet } from './src/js/checkers.js';
 import { roundsDatabase } from './src/js/roundsDatabase.js';
 import { Round } from './src/js/round.js';
-import { calculateDistance, getRoundScore } from './src/js/calculate.js';
+import { calculateDistance, getRoundScore, generateRandomNumber } from './src/js/calculate.js';
 
 
 
 
 let theGame;
 let markers = [];
+let randomRound = generateRandomNumber(0, roundsDatabase.length);
 
 let countryMultiplier;
 let cityMultiplier;
@@ -105,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function(){
   })
   // CREATE NEW GAME AND GENERATE FIRST ROUND
   theGame = new TheGame();
-  theGame.generateRound(theGame.rounds.length);
+  theGame.generateRound(0);
   let map = new google.maps.Map(document.querySelector('.map'), {
     center: {lat: 0, lng: 0},
     zoom: 2,
@@ -118,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let formCountryVal = formCountry.querySelector('input').value;
 
     if(formCountry.className != 'invisible') {
-      let location = roundsDatabase[theGame.rounds.length-1].location;
+      let location = theGame.rounds[theGame.rounds.length-1].address;
       fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
       .then(res => res.json()
       .then(res => {
@@ -146,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let formCityVal = formCity.querySelector('input').value;
 
     if(formCity.className != 'invisible') {
-      let location = roundsDatabase[theGame.rounds.length-1].location;
+      let location = theGame.rounds[theGame.rounds.length-1].address;
       fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
       .then(res => res.json())
       .then(res => {
@@ -173,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function(){
     e.preventDefault();
     let formStreetVal = formStreet.querySelector('input').value;
     if(formStreet.className != 'invisible') {
-      let location = roundsDatabase[theGame.rounds.length-1].location;
+      let location = theGame.rounds[theGame.rounds.length-1].address;
       fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
       .then(res => res.json())
       .then(res => {
@@ -206,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function(){
       placeMarker(event.latLng);
 
 
-    let location = roundsDatabase[theGame.rounds.length-1].location;
+    let location = theGame.rounds[theGame.rounds.length-1].address;
     fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json())
     .then(res => {
@@ -263,7 +264,8 @@ document.addEventListener("DOMContentLoaded", function(){
   //SKIP PRECISION LEVEL
   for (var i = 0; i < skipButton.length; i++) {
     skipButton[i].addEventListener('click', function(){
-      let location = roundsDatabase[theGame.rounds.length-1].location;
+      let location = theGame.rounds[theGame.rounds.length-1].address;
+      console.log(location);
       fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
       .then(res => res.json())
       .then(res => {
@@ -356,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //NEXT ROUND BUTTON
   nextRound.addEventListener('click', function(){
-    theGame.generateRound(theGame.rounds.length);
+    theGame.generateRound(randomRound);
     shotsDiv.classList.remove('invisible');
     shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
     messageDiv.innerText = "Guess the country first";
@@ -382,6 +384,8 @@ document.addEventListener("DOMContentLoaded", function(){
     actualCity.innerText = "City:";
     actualStreet.innerText = "Street:";
     errorHeader.innerText = "";
+
+    randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
     console.log(theGame.rounds);
     console.log("theGame.rounds.length: ",theGame.rounds.length);

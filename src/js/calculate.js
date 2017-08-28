@@ -19,3 +19,8 @@ export function getRoundScore(startScore, error, multiplier){
   console.log("Round score: ", parseInt(resultScore.toFixed(2)));
   return parseInt(resultScore.toFixed(2));
 }
+
+export function generateRandomNumber(begin, end){
+  let result = Math.round(Math.random() * end - begin);
+  return result;
+}
