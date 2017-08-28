@@ -72,7 +72,6 @@ export const roundsDatabase = [
     location: "Pulsera, Algeciras, Spain"
   },
   {
-    location: "Avinguda de l'Autopista del Saler, Valencia, Spain"
-  },
-
+    location: "Autopista del Saler, Valencia, Hiszpania"
+  }
 ]

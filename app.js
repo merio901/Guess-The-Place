@@ -278,7 +278,11 @@ document.addEventListener("DOMContentLoaded", function(){
         else if(!formCity.classList.contains('invisible')){
           switchToStreet();
           if(res.results[0].components.city === undefined){
-            actualCity.innerText = `City: ${res.results[0].components.town}`;
+            if(res.results[0].components.town === undefined){
+              actualCity.innerText = `City: ${res.results[0].components.state}`;
+            } else {
+              actualCity.innerText = `City: ${res.results[0].components.town}`;
+            }
           } else {
             actualCity.innerText = `City: ${res.results[0].components.city}`;
           }
