@@ -10,7 +10,7 @@ import { calculateDistance, getRoundScore, generateRandomNumber } from './src/js
 
 let theGame;
 let markers = [];
-let randomRound = generateRandomNumber(0, roundsDatabase.length);
+let randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
 let countryMultiplier;
 let cityMultiplier;
@@ -23,7 +23,8 @@ let streetMultiplierLi = document.querySelector('.street-multiplier');
 let pinMultiplierLi = document.querySelector('.pin-multiplier');
 let multipliersSpan = document.querySelector('.multipliers h3 span');
 
-let helloScreen = document.querySelector('.hello-screen');
+let helloScreenLeft = document.querySelector('.hello-screen__left');
+let helloScreenRight = document.querySelector('.hello-screen__right');
 let helloMsg = document.querySelector('.hello-msg');
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
@@ -99,20 +100,25 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //REMOVE HELLO SCREEN
   helloMsg.addEventListener('click', function(){
-    helloScreen.style.transition = "2.5s ease";
-    helloScreen.style.left = "-2000px";
-    helloScreen.style.opacity= "0";
-    helloScreen.style.visibility = "hidden";
+    helloScreenLeft.style.transition = "3s ease";
+    helloScreenLeft.style.width = "0";
+    helloScreenLeft.style.opacity= "0";
+    helloScreenLeft.style.visibility = "hidden";
+    helloScreenRight.style.transition = "3s ease";
+    helloScreenRight.style.width = "0"
+    helloScreenRight.style.opacity= "0";
+    helloScreenRight.style.visibility = "hidden";
+    nextRound.innerText = `Next round`;
   })
+
   // CREATE NEW GAME AND GENERATE FIRST ROUND
   theGame = new TheGame();
-  theGame.generateRound(0);
+  theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
   let map = new google.maps.Map(document.querySelector('.map'), {
     center: {lat: 0, lng: 0},
     zoom: 2,
     zoomControl: false
   });
-
   //COUNTRY FORM
   formCountry.addEventListener('submit', function(e){
     e.preventDefault();
@@ -251,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //HANDLE MOVE TO START BUTTON
   moveToStart.addEventListener('click', function(){
-    let location = roundsDatabase[theGame.rounds.length-1].location;
+    let location = theGame.rounds[theGame.rounds.length-1].address;
     fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json()
     .then(res => {
@@ -340,7 +346,11 @@ document.addEventListener("DOMContentLoaded", function(){
     roundScoreDiv.style.transition = "3s ease";
     roundScoreDiv.style.opacity = "1";
 
-    mapDiv.style.transition = "1s ease";
+    if(theGame.rounds.length === 5){
+      nextRound.innerText = `Summary`;
+    }
+
+    mapDiv.style.transition = "0.5s ease";
     mapDiv.style.left = "-700px";
     guessButton.style.transition = "1s ease";
     guessButton.style.left = "-700px";
@@ -358,7 +368,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //NEXT ROUND BUTTON
   nextRound.addEventListener('click', function(){
-    theGame.generateRound(randomRound);
     shotsDiv.classList.remove('invisible');
     shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
     messageDiv.innerText = "Guess the country first";
@@ -387,6 +396,24 @@ document.addEventListener("DOMContentLoaded", function(){
 
     randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
+    if(theGame.rounds.length === 5){
+      helloScreenLeft.style.transition = "1.5s ease";
+      helloScreenLeft.style.width = "50vw";
+      helloScreenLeft.style.opacity= "1";
+      helloScreenLeft.style.visibility = "visible";
+      helloScreenRight.style.transition = "1.5s ease";
+      helloScreenRight.style.width = "50vw";
+      helloScreenRight.style.opacity= "1";
+      helloScreenRight.style.visibility = "visible";
+
+      setTimeout(function(){
+        console.log('hi');
+        theGame = new TheGame();
+        theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
+      }, 2000);
+    } else {
+      theGame.generateRound(randomRound);
+    }
     console.log(theGame.rounds);
     console.log("theGame.rounds.length: ",theGame.rounds.length);
     console.log(theGame.gameScore);
