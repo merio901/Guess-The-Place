@@ -49,23 +49,31 @@ let actualStreet = document.querySelector('.actual-street');
 function switchToCity(){
   formCountry.classList.add('invisible');
   formCity.classList.remove('invisible');
-  messageDiv.innerText = "Good job! Try guessing city now.";
-  theGame.rounds[theGame.rounds.length-1].shots--;
-  shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+
+  if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+    messageDiv.innerText = "You're out of shots. Use this last chance to make a guess."
+  } else {
+    messageDiv.innerText = "Good job! Try guessing city now.";
+  }
   countryMultiplier = 0;
 }
 function switchToStreet(){
   formCity.classList.add('invisible');
   formStreet.classList.remove('invisible');
-  messageDiv.innerText = "Nice! Time to guess the street."
-  theGame.rounds[theGame.rounds.length-1].shots--;
-  shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+  if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+    messageDiv.innerText = "You're out of shots. Use this last chance to make a guess."
+  } else {
+    messageDiv.innerText = "Nice! Time to guess the street."
+  }
   cityMultiplier = 0;
 }
 function switchToPin(){
-  messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
-  theGame.rounds[theGame.rounds.length-1].shots--;
-  shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+  if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+    messageDiv.innerText = "You're out of shots. Use this last chance to make a guess."
+  } else {
+    messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
+  }
+
   // MAP AND BUTTON SLIDE IN
   mapDiv.style.transition = "0.5s ease";
   mapDiv.style.left = "30px";
@@ -119,31 +127,40 @@ document.addEventListener("DOMContentLoaded", function(){
     zoom: 2,
     zoomControl: false
   });
+
   //COUNTRY FORM
   formCountry.addEventListener('submit', function(e){
     e.preventDefault();
     let formCountryVal = formCountry.querySelector('input').value;
+    theGame.rounds[theGame.rounds.length-1].shots--;
+    shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
-    if(formCountry.className != 'invisible') {
-      let location = theGame.rounds[theGame.rounds.length-1].address;
-      fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
-      .then(res => res.json()
-      .then(res => {
-        if(checkCountry(formCountryVal, res) === true){
-          switchToCity();
-          actualCountry.innerText = `Country: ${formCountryVal}`;
-          countryMultiplier = 1;
-          theGame.rounds[theGame.rounds.length-1].multiplier++;
-          bonusAppear(1);
-          bonusDisappear();
-        } else {
-          messageDiv.innerText = "You're probably wrong! Try again."
-          theGame.rounds[theGame.rounds.length-1].shots--;
-          theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
-          countryMultiplier = 0;
-        }
-      }))
+    if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+      theGame.rounds[theGame.rounds.length-1].shots = 0;
+      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+      formCountry.querySelector('button').setAttribute("disabled", "true");
+      switchToPin();
+      map.setZoom(2);
+    } else {
+      if(formCountry.className != 'invisible') {
+        let location = theGame.rounds[theGame.rounds.length-1].address;
+        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        .then(res => res.json()
+        .then(res => {
+          if(checkCountry(formCountryVal, res) === true){
+            switchToCity();
+            actualCountry.innerText = `Country: ${formCountryVal}`;
+            countryMultiplier = 1;
+            theGame.rounds[theGame.rounds.length-1].multiplier++;
+            bonusAppear(1);
+            bonusDisappear();
+          } else {
+            messageDiv.innerText = "You're probably wrong! Try again."
+            theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
+            countryMultiplier = 0;
+          }
+        }))
+      }
     }
   })
 
@@ -151,27 +168,35 @@ document.addEventListener("DOMContentLoaded", function(){
   formCity.addEventListener('submit', function(e){
     e.preventDefault();
     let formCityVal = formCity.querySelector('input').value;
+    theGame.rounds[theGame.rounds.length-1].shots--;
+    shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
-    if(formCity.className != 'invisible') {
-      let location = theGame.rounds[theGame.rounds.length-1].address;
-      fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
-      .then(res => res.json())
-      .then(res => {
-        if(checkCity(formCityVal, res) === true){
-          switchToStreet();
-          actualCity.innerText = `City: ${formCityVal}`;
-          theGame.rounds[theGame.rounds.length-1].multiplier++;
-          cityMultiplier = 1;
-          bonusAppear(1);
-          bonusDisappear();
-        } else {
-          messageDiv.innerText = "Nope!"
-          theGame.rounds[theGame.rounds.length-1].shots--;
-          theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
-          cityMultiplier = 0;
-        }
-      })
+    if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+      theGame.rounds[theGame.rounds.length-1].shots = 0;
+      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+      formCity.querySelector('button').setAttribute("disabled", "true");
+      switchToPin();
+      map.setZoom(2);
+    } else {
+      if(formCity.className != 'invisible') {
+        let location = theGame.rounds[theGame.rounds.length-1].address;
+        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        .then(res => res.json())
+        .then(res => {
+          if(checkCity(formCityVal, res) === true){
+            switchToStreet();
+            actualCity.innerText = `City: ${formCityVal}`;
+            theGame.rounds[theGame.rounds.length-1].multiplier++;
+            cityMultiplier = 1;
+            bonusAppear(1);
+            bonusDisappear();
+          } else {
+            messageDiv.innerText = "Nope!"
+            theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
+            cityMultiplier = 0;
+          }
+        })
+      }
     }
   })
 
@@ -179,31 +204,40 @@ document.addEventListener("DOMContentLoaded", function(){
   formStreet.addEventListener('submit', function(e){
     e.preventDefault();
     let formStreetVal = formStreet.querySelector('input').value;
-    if(formStreet.className != 'invisible') {
-      let location = theGame.rounds[theGame.rounds.length-1].address;
-      fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
-      .then(res => res.json())
-      .then(res => {
-        let lat = res.results[0].geometry.lat;
-        let lng = res.results[0].geometry.lng;
+    theGame.rounds[theGame.rounds.length-1].shots--;
+    shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
-        if(checkStreet(formStreetVal, res) === true){
-          switchToPin();
-          map.setCenter({lat: lat, lng: lng});
-          map.setZoom(14);
-          actualStreet.innerText = `Street: ${formStreetVal}`;
-          theGame.rounds[theGame.rounds.length-1].multiplier++;
-          streetMultiplier = 1;
-          bonusAppear(1);
-          bonusDisappear();
-        } else {
-          theGame.rounds[theGame.rounds.length-1].shots--;
-          theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
-          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
-          messageDiv.innerText = "Try again!";
-          streetMultiplier = 0;
-        }
-      })
+    if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+      theGame.rounds[theGame.rounds.length-1].shots = 0;
+      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+      formStreet.querySelector('button').setAttribute("disabled", "true");
+      switchToPin();
+      map.setZoom(2);
+    } else {
+      if(formStreet.className != 'invisible') {
+        let location = theGame.rounds[theGame.rounds.length-1].address;
+        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        .then(res => res.json())
+        .then(res => {
+          let lat = res.results[0].geometry.lat;
+          let lng = res.results[0].geometry.lng;
+
+          if(checkStreet(formStreetVal, res) === true){
+            switchToPin();
+            map.setCenter({lat: lat, lng: lng});
+            map.setZoom(14);
+            actualStreet.innerText = `Street: ${formStreetVal}`;
+            theGame.rounds[theGame.rounds.length-1].multiplier++;
+            streetMultiplier = 1;
+            bonusAppear(1);
+            bonusDisappear();
+          } else {
+            theGame.rounds[theGame.rounds.length-1].roundScore -= 10;
+            messageDiv.innerText = "Try again!";
+            streetMultiplier = 0;
+          }
+        })
+      }
     }
   })
 
@@ -217,7 +251,9 @@ document.addEventListener("DOMContentLoaded", function(){
     fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json())
     .then(res => {
-      theGame.rounds[theGame.rounds.length-1].shots--;
+      if(theGame.rounds[theGame.rounds.length-1].shots != 0){
+        theGame.rounds[theGame.rounds.length-1].shots--;
+      }
       shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
       //END ROUND BUTTON SLIDE IN
@@ -271,37 +307,48 @@ document.addEventListener("DOMContentLoaded", function(){
   for (var i = 0; i < skipButton.length; i++) {
     skipButton[i].addEventListener('click', function(){
       let location = theGame.rounds[theGame.rounds.length-1].address;
-      console.log(location);
-      fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
-      .then(res => res.json())
-      .then(res => {
+      theGame.rounds[theGame.rounds.length-1].shots--;
+      shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
-        let lat = res.results[0].geometry.lat;
-        let lng = res.results[0].geometry.lng;
 
-        if(!formCountry.classList.contains('invisible')){
-          switchToCity();
-          actualCountry.innerText = `Country: ${res.results[0].components.country}`;
-        }
-        else if(!formCity.classList.contains('invisible')){
-          switchToStreet();
-          if(res.results[0].components.city === undefined){
-            if(res.results[0].components.town === undefined){
-              actualCity.innerText = `City: ${res.results[0].components.state}`;
-            } else {
-              actualCity.innerText = `City: ${res.results[0].components.town}`;
-            }
-          } else {
-            actualCity.innerText = `City: ${res.results[0].components.city}`;
+        console.log(location);
+        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        .then(res => res.json())
+        .then(res => {
+
+          let lat = res.results[0].geometry.lat;
+          let lng = res.results[0].geometry.lng;
+
+          if(!formCountry.classList.contains('invisible')){
+            switchToCity();
+            actualCountry.innerText = `Country: ${res.results[0].components.country}`;
           }
-        }
-        else if(!formStreet.classList.contains('invisible')){
+          else if(!formCity.classList.contains('invisible')){
+            switchToStreet();
+            if(res.results[0].components.city === undefined){
+              if(res.results[0].components.town === undefined){
+                actualCity.innerText = `City: ${res.results[0].components.state}`;
+              } else {
+                actualCity.innerText = `City: ${res.results[0].components.town}`;
+              }
+            } else {
+              actualCity.innerText = `City: ${res.results[0].components.city}`;
+            }
+          }
+          else if(!formStreet.classList.contains('invisible')){
+            switchToPin();
+            map.setCenter({lat: lat, lng: lng});
+            map.setZoom(14);
+            actualStreet.innerText = `Street: ${res.results[0].formatted.split(",")[0]}`;
+          }
+        })
+        if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
+          theGame.rounds[theGame.rounds.length-1].shots = 0;
+          shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+          formCountry.querySelector('button').setAttribute("disabled", "true");
           switchToPin();
-          map.setCenter({lat: lat, lng: lng});
-          map.setZoom(14);
-          actualStreet.innerText = `Street: ${res.results[0].formatted.split(",")[0]}`;
+          map.setZoom(2);
         }
-      })
 
     })
   }
@@ -369,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function(){
   //NEXT ROUND BUTTON
   nextRound.addEventListener('click', function(){
     shotsDiv.classList.remove('invisible');
-    shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
+    shotsDiv.innerText = "Shots left: 10";
     messageDiv.innerText = "Guess the country first";
     formStreet.classList.add('invisible');
     formCity.classList.add('invisible');
@@ -386,6 +433,8 @@ document.addEventListener("DOMContentLoaded", function(){
     formStreet.querySelector('input').removeAttribute("disabled");
     formStreet.querySelector('button').removeAttribute("disabled");
     formStreet.querySelector('.skip-button').removeAttribute("disabled");
+    formCity.querySelector('button').removeAttribute("disabled");
+    formCountry.querySelector('button').removeAttribute("disabled");
     formCountry.querySelector('input').value = "";
     formCity.querySelector('input').value = "";
     formStreet.querySelector('input').value = "";
