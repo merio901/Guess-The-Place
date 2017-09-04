@@ -8,11 +8,11 @@ html, body {
   overflow: hidden;
 }
 .hello-screen--top {
-  
+
 }
 .hello-screen__left {
   width: 50vw;
-  height: 80vh;
+  height: 100vh;
   visibility: visible;
   z-index: 5;
   position: absolute;
@@ -24,7 +24,7 @@ html, body {
 }
 .hello-screen__right {
   width: 50vw;
-  height: 80vh;
+  height: 100vh;
   visibility: visible;
   z-index: 5;
   position: absolute;
@@ -41,8 +41,8 @@ html, body {
 }
 .map {
   position: absolute;
-  height: 400px;
-  width: 400px;
+  height: 40vh;
+  width: 40vh;
   left: -3000px;
   bottom: 20%;
   z-index: 2;
