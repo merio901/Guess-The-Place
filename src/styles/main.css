@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   margin: 0;
+  font-size: 16px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -10,9 +11,6 @@ html, body {
 }
 .hello-screen {
   overflow: hidden;
-}
-.hello-screen--top {
-
 }
 .hello-screen__left {
   width: 50vw;
@@ -41,7 +39,7 @@ html, body {
 .hello-msg {
   color: springgreen;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 3em;
 }
 .map {
   position: absolute;
@@ -54,17 +52,18 @@ html, body {
 }
 .guess-place {
   position: absolute;
-  letter-spacing: 2px;
-  font-size: 24px;
+  letter-spacing: 0.1em;
+  font-size: 1.5rem;
   background-color: rgba(0,0,156,1);
   color: rgb(0,255,0);
-  border-radius: 15px;
+  border-radius: 2em;
   border: none;
-  width: 400px;
-  height: 40px;
+  width: 40vh;
+  height: 4.5vh;
   left: -3000px;
   bottom: 15%;
   z-index: 2;
+  outline: none;
 }
 .guess-place:hover{
   background-color: rgba(0,156,0,0.7);
@@ -76,7 +75,7 @@ html, body {
   width: 300px;
   height: 300px;
   color: yellow;
-  font-size: 50px;
+  font-size: 4em;
   font-style: italic;
   position: absolute;
   left: 0;
@@ -89,103 +88,115 @@ html, body {
   opacity: 0;
 }
 .street-view {
-  height: 80%;
+  height: 80vh;
   width: 100%;
 }
 .upperPanel {
-  height: 10%;
+  height: 10vh;
   background-color: #37474F;
   width: 100%;
   color: white;
-  font-size: 1.2em;
+  font-size: 0.95rem;
 }
 .upperPanel__box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid yellow;
   margin-top: 0.7em;
 }
 .upperPanel .position {
-  margin-right: 15%;
-  border: 1px solid red;
-  width: 25em;
+  width: 40%;
 }
 .upperPanel__box .game {
   display: flex;
-  border: 1px solid red;
 }
 .game .game__score {
   width: 7em;
   margin-right: 1em;
 }
 .bottomPanel {
-  height: 10%;
+  height: 10vh;
   background-color: #37474F;
 }
-
+.bottomPanel__box {
+  display: flex;
+  flex-wrap: wrap;
+  height: 10vh;
+  align-content: space-around;
+}
+.bottomPanel__box--up {
+  width: 100%;
+  display: flex;
+}
 .form {
   display: flex;
   align-items: center;
-  width: 100%;
-  font-size: 20px;
-  height: 50px;
 }
-.form .submit-button {
+.form label {
+  margin-bottom: 0;
+  margin-right: 5px;
+  width: 10rem;
+  font-size: 1.15rem;
+  color: white;
+  letter-spacing: 2px;
+  font-weight: normal;
+}
+.form input {
+  width: 25rem;
+  height: 1.5rem;
+  border-radius: 25px;
+  padding-left: 5px;
+  border: 1px solid grey;
+  outline: none;
+}
+.form .form-buttons {
+  width: 15rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.25rem;
+}
+.form-buttons .submit-button {
+  border: none;
   background-color: #37474F;
   color: springgreen;
-  border: none;
-  font-size: 20px;
-  margin: 0 40px;
-  letter-spacing: 2px;
+  outline: none;
 }
-.form .submit-button:hover {
+.form-buttons .submit-button:hover {
   color: yellow;
 }
-label {
-  color: white;
-  font-size: 20px;
-}
-input {
-  margin-left: 10px;
-  font-size: 20px;
-  width: 500px;
-  height: 20px;
-  color: black;
-  border: 1px solid blue;
-  border-radius: 5px;
-}
-.skip-button {
+.form-buttons .skip-button {
   cursor: pointer;
-  font-size: 20px;
-  color: lightblue;
-  line-height: 50px;
+  color: #CD853F;
+  border: none;
   background-color: #37474F;
-  border: none;
+  outline: none;
 }
-.skip-button:hover {
+.form-buttons .skip-button:hover {
   color: yellow;
 }
-.message-restart-shots {
+.bottomPanel__box--down {
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.message {
+  justify-content: center;
   color: white;
-  font-size: 20px;
-  display: inline-block;
-  width: 700px;
 }
-.shots {
-  color: white;
-  font-size: 20px;
+.bottomPanel__box--down .message {
+  font-size: 2rem;
+  color: red;
 }
-.restart {
+.restart-shots {
+  display: flex;
+  font-size: 1.25rem;
+  justify-content: space-around;
+  width: 20rem;
+  color: lightblue;
+}
+.restart-shots .restart {
+  color: #CD853F;
   cursor: pointer;
-  color: white;
-  font-size: 20px;
-  margin-right: 40px;
+}
+.restart-shots .restart:hover {
+  color: yellow;
 }
 .invisible {
   display: none;
@@ -236,4 +247,5 @@ h1 {
   border: none;
   background-color: rgba(255,255,255, 0);
   border-bottom: 2px solid blue;
+  outline: none;
 }

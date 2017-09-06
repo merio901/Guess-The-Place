@@ -55,7 +55,7 @@ function switchToCity(){
   if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
     messageDiv.innerText = "You're out of shots. Use this last chance to make a guess."
   } else {
-    messageDiv.innerText = "Good job! Try guessing city now.";
+    messageDiv.innerText = "Try guessing city now.";
   }
   countryMultiplier = 0;
 }
@@ -65,7 +65,7 @@ function switchToStreet(){
   if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
     messageDiv.innerText = "You're out of shots. Use this last chance to make a guess."
   } else {
-    messageDiv.innerText = "Nice! Time to guess the street."
+    messageDiv.innerText = "Time to guess the street."
   }
   cityMultiplier = 0;
 }
@@ -73,7 +73,7 @@ function switchToPin(){
   if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
     messageDiv.innerText = "You're out of shots. Use this last chance to make a guess."
   } else {
-    messageDiv.innerText = "Great! Now make a guess on map where exactly are you."
+    messageDiv.innerText = "Now make a guess on map where exactly are you."
   }
 
   // MAP AND BUTTON SLIDE IN
