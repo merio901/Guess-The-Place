@@ -4,6 +4,10 @@ html, body {
   padding: 0;
   box-sizing: border-box;
 }
+.container {
+  position: relative;
+  width: 1200px;
+}
 .hello-screen {
   overflow: hidden;
 }
@@ -92,18 +96,34 @@ html, body {
   height: 10%;
   background-color: #37474F;
   width: 100%;
+  color: white;
+  font-size: 1.2em;
+}
+.upperPanel__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid yellow;
+  margin-top: 0.7em;
 }
 .upperPanel .position {
-  color: white;
+  margin-right: 15%;
+  border: 1px solid red;
+  width: 25em;
+}
+.upperPanel__box .game {
+  display: flex;
+  border: 1px solid red;
+}
+.game .game__score {
+  width: 7em;
+  margin-right: 1em;
 }
 .bottomPanel {
   height: 10%;
   background-color: #37474F;
 }
-.container {
-  position: relative;
-  width: 1200px;
-}
+
 .form {
   display: flex;
   align-items: center;

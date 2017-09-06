@@ -12,11 +12,16 @@ let theGame;
 let markers = [];
 let randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
+let actualCountry = document.querySelector('.actual-country');
+let actualCity = document.querySelector('.actual-city');
+let actualStreet = document.querySelector('.actual-street');
+let gameScore = document.querySelector('.game__score');
+let gameRounds = document.querySelector('.game__rounds');
+
 let countryMultiplier;
 let cityMultiplier;
 let streetMultiplier;
 let pinMultiplier;
-
 let countryMultiplierLi = document.querySelector('.country-multiplier');
 let cityMultiplierLi = document.querySelector('.city-multiplier');
 let streetMultiplierLi = document.querySelector('.street-multiplier');
@@ -42,9 +47,6 @@ let roundScoreDiv = document.querySelector('.round-score');
 let errorHeader = document.querySelector('.error');
 let bonusDiv = document.querySelector('.bonus');
 
-let actualCountry = document.querySelector('.actual-country');
-let actualCity = document.querySelector('.actual-city');
-let actualStreet = document.querySelector('.actual-street');
 
 function switchToCity(){
   formCountry.classList.add('invisible');
@@ -117,6 +119,8 @@ document.addEventListener("DOMContentLoaded", function(){
     helloScreenRight.style.opacity= "0";
     helloScreenRight.style.visibility = "hidden";
     nextRound.innerText = `Next round`;
+    gameScore.innerText = `Score: 0`;
+    gameRounds.innerText = `Round: 1/5`;
   })
 
   // CREATE NEW GAME AND GENERATE FIRST ROUND
@@ -442,6 +446,8 @@ document.addEventListener("DOMContentLoaded", function(){
     actualCity.innerText = "City:";
     actualStreet.innerText = "Street:";
     errorHeader.innerText = "";
+    gameScore.innerText = `Score: ${theGame.gameScore}`;
+    gameRounds.innerText = `Round: ${theGame.rounds.length+1}/5`;
 
     randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
@@ -456,7 +462,6 @@ document.addEventListener("DOMContentLoaded", function(){
       helloScreenRight.style.visibility = "visible";
 
       setTimeout(function(){
-        console.log('hi');
         theGame = new TheGame();
         theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
       }, 2000);
