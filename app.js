@@ -113,15 +113,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //REMOVE HELLO SCREEN
   helloMsg.addEventListener('click', function(){
-    helloScreenLeft.style.transition = "3s ease";
+    helloScreenLeft.style.transition = "1s ease";
     helloScreenLeft.style.width = "0";
     helloScreenLeft.style.opacity= "0";
     helloScreenLeft.style.visibility = "hidden";
-    helloScreenRight.style.transition = "3s ease";
+    helloScreenRight.style.transition = "1s ease";
     helloScreenRight.style.width = "0"
     helloScreenRight.style.opacity= "0";
     helloScreenRight.style.visibility = "hidden";
-    helloScreenTop.style.transition = "5s ease";
+    helloScreenTop.style.transition = "1s ease";
     helloScreenTop.style.height = "0"
     helloScreenTop.style.opacity= "0";
     helloScreenTop.style.visibility = "hidden";
@@ -467,6 +467,10 @@ document.addEventListener("DOMContentLoaded", function(){
       helloScreenRight.style.width = "50vw";
       helloScreenRight.style.opacity= "1";
       helloScreenRight.style.visibility = "visible";
+      helloScreenTop.style.transition = "1s ease";
+      helloScreenTop.style.height = "33%"
+      helloScreenTop.style.opacity= "1";
+      helloScreenTop.style.visibility = "visible";
 
       setTimeout(function(){
         theGame = new TheGame();

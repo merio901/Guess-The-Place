@@ -1,7 +1,8 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-size: 16px;
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 18px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -75,12 +76,12 @@ html, body {
   background-image: url("../images/9.jpg");
 }
 .hello-screen__top div:nth-child(10) {
-  animation-delay: 10s;
-  background-image: url("../images/10.jpg");
-}
-.hello-screen__top div:nth-child(11) {
   animation-delay: 4s;
   background-image: url("../images/11.jpg");
+}
+.hello-screen__top div:nth-child(11) {
+  animation-delay: 10s;
+  background-image: url("../images/10.jpg");
 }
 .hello-screen__left {
   width: 50vw;
@@ -160,24 +161,31 @@ html, body {
   opacity: 0;
 }
 .street-view {
-  height: 80vh;
+  height: 80%;
   width: 100%;
 }
 .upperPanel {
   height: 10vh;
-  background-color: #37474F;
+  background: rgba(0,11,51,1);
+background: -moz-linear-gradient(45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(0,11,51,1)), color-stop(10%, rgba(0,11,51,1)), color-stop(35%, rgba(2,59,59,1)), color-stop(66%, rgba(2,59,59,1)), color-stop(90%, rgba(0,11,51,1)), color-stop(100%, rgba(0,11,51,1)));
+background: -webkit-linear-gradient(45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: -o-linear-gradient(45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: -ms-linear-gradient(45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: linear-gradient(45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', endColorstr='#000b33', GradientType=1 );
   width: 100%;
-  color: white;
-  font-size: 0.95rem;
+  color: lightblue;
 }
 .upperPanel__box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.7em;
+  margin-top: 0.3em;
 }
 .upperPanel .position {
   width: 40%;
+  font-size: 1.1rem;
 }
 .upperPanel__box .game {
   display: flex;
@@ -185,10 +193,21 @@ html, body {
 .game .game__score {
   width: 7em;
   margin-right: 1em;
+  font-size: 1.5rem;
+}
+.game .game__rounds {
+  font-size: 1.5rem;
 }
 .bottomPanel {
   height: 10vh;
-  background-color: #37474F;
+  background: rgba(0,11,51,1);
+background: -moz-linear-gradient(-45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(0,11,51,1)), color-stop(10%, rgba(0,11,51,1)), color-stop(35%, rgba(2,59,59,1)), color-stop(66%, rgba(2,59,59,1)), color-stop(90%, rgba(0,11,51,1)), color-stop(100%, rgba(0,11,51,1)));
+background: -webkit-linear-gradient(-45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+background: linear-gradient(135deg, rgba(0,11,51,1) 0%, rgba(0,11,51,1) 10%, rgba(2,59,59,1) 35%, rgba(2,59,59,1) 66%, rgba(0,11,51,1) 90%, rgba(0,11,51,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', endColorstr='#000b33', GradientType=1 );
 }
 .bottomPanel__box {
   display: flex;
@@ -197,6 +216,7 @@ html, body {
   align-content: space-around;
 }
 .bottomPanel__box--up {
+  margin-top: 0.6rem;
   width: 100%;
   display: flex;
 }
@@ -208,8 +228,8 @@ html, body {
   margin-bottom: 0;
   margin-right: 5px;
   width: 10rem;
-  font-size: 1.15rem;
-  color: white;
+  font-size: 1.25rem;
+  color: lightblue;
   letter-spacing: 2px;
   font-weight: normal;
 }
@@ -220,16 +240,17 @@ html, body {
   padding-left: 5px;
   border: 1px solid grey;
   outline: none;
+  font-size: 1.25rem;
 }
 .form .form-buttons {
-  width: 15rem;
+  width: 12rem;
   display: flex;
   justify-content: space-around;
   font-size: 1.25rem;
 }
 .form-buttons .submit-button {
   border: none;
-  background-color: #37474F;
+  background-color: transparent;
   color: springgreen;
   outline: none;
 }
@@ -240,7 +261,7 @@ html, body {
   cursor: pointer;
   color: #CD853F;
   border: none;
-  background-color: #37474F;
+  background-color: transparent;
   outline: none;
 }
 .form-buttons .skip-button:hover {
@@ -283,41 +304,47 @@ html, body {
   z-index: 2;
   width: 400px;
   height: 500px;
-  background-color: rgba(255,255,255, 0.8);
-  border: 1px solid blue;
-  border-radius: 25px;
+  background-color: rgba(0,255,0, 0.8);
+  border-radius: 75px;
   visibility: hidden;
   opacity: 0;
+  box-shadow: 0px 0px 1000px blue;
 }
 h1 {
   text-align: center;
   margin: 20px auto;
-  font-size: 25px;
+  font-size: 1.5rem;
+  color: black;
 }
 .points {
   margin-bottom: 0;
   text-align: center;
-  font-size: 40px;
-  color: red;
+  font-size: 2.5rem;
+  color: blue;
 }
 .multipliers {
   margin-top: 20px;
   list-style-type: none;
+  color: black;
 }
 .multipliers h3 span {
   color: red;
 }
 .multipliers li {
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 1.1rem;
 }
 .next-round {
-  font-size: 25px;
+  font-size: 2rem;
   position: absolute;
-  left: 125px;
-  bottom: 25px;
+  left: 120px;
+  bottom: 15px;
   border: none;
   background-color: rgba(255,255,255, 0);
   border-bottom: 2px solid blue;
   outline: none;
+  color: black;
+}
+.next-round:hover {
+  color: blue;
 }
