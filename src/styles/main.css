@@ -12,12 +12,83 @@ html, body {
 .hello-screen {
   overflow: hidden;
 }
+.hello-screen__top {
+  width: 100vw;
+  height: 33%;
+  visibility: visible;
+  z-index: 6;
+  position: absolute;
+  top: 0;
+  background-position: center;
+}
+.hello-screen__top div {
+  width: 100vw;
+  height: 100%;
+  visibility: visible;
+  z-index: 6;
+  position: absolute;
+  top: 0;
+  background-position: center;
+  animation: round 61s ease infinite;
+  opacity: 1;
+}
+@keyframes round {
+  0% { opacity: 1 }
+  3% { opacity: 0 }
+  70% { opacity: 0 }
+  90% { opacity: 1 }
+}
+.hello-screen__top div:first-child {
+  animation-delay: 64s;
+  background-image: url("../images/1.jpg");
+}
+.hello-screen__top div:nth-child(2) {
+  animation-delay: 58s;
+  background-image: url("../images/2.jpg");
+}
+.hello-screen__top div:nth-child(3) {
+  animation-delay: 52s;
+  background-image: url("../images/3.jpg");
+}
+.hello-screen__top div:nth-child(4) {
+  animation-delay: 46s;
+  background-image: url("../images/4.jpg");
+}
+.hello-screen__top div:nth-child(5) {
+  animation-delay: 40s;
+  background-image: url("../images/5.jpg");
+}
+.hello-screen__top div:nth-child(6) {
+  animation-delay: 34s;
+  background-image: url("../images/6.jpg");
+}
+.hello-screen__top div:nth-child(7) {
+  animation-delay: 28s;
+  background-image: url("../images/7.jpg");
+}
+.hello-screen__top div:nth-child(8) {
+  animation-delay: 22s;
+  background-image: url("../images/8.jpg");
+}
+.hello-screen__top div:nth-child(9) {
+  animation-delay: 16s;
+  background-image: url("../images/9.jpg");
+}
+.hello-screen__top div:nth-child(10) {
+  animation-delay: 10s;
+  background-image: url("../images/10.jpg");
+}
+.hello-screen__top div:nth-child(11) {
+  animation-delay: 4s;
+  background-image: url("../images/11.jpg");
+}
 .hello-screen__left {
   width: 50vw;
-  height: 100vh;
+  height: 70vh;
   visibility: visible;
   z-index: 5;
   position: absolute;
+  top: 30vh;
   left: 0;
   background-color: #37474F;
   display: flex;
@@ -26,10 +97,11 @@ html, body {
 }
 .hello-screen__right {
   width: 50vw;
-  height: 100vh;
+  height: 70vh;
   visibility: visible;
   z-index: 5;
   position: absolute;
+  top: 30vh;
   right: 0;
   background-color: #37474F;
   display: flex;

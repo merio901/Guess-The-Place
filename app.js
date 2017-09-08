@@ -30,6 +30,7 @@ let multipliersSpan = document.querySelector('.multipliers h3 span');
 
 let helloScreenLeft = document.querySelector('.hello-screen__left');
 let helloScreenRight = document.querySelector('.hello-screen__right');
+let helloScreenTop = document.querySelector('.hello-screen__top');
 let helloMsg = document.querySelector('.hello-msg');
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
@@ -108,6 +109,8 @@ function bonusDisappear(){
 
 document.addEventListener("DOMContentLoaded", function(){
 
+
+
   //REMOVE HELLO SCREEN
   helloMsg.addEventListener('click', function(){
     helloScreenLeft.style.transition = "3s ease";
@@ -118,6 +121,10 @@ document.addEventListener("DOMContentLoaded", function(){
     helloScreenRight.style.width = "0"
     helloScreenRight.style.opacity= "0";
     helloScreenRight.style.visibility = "hidden";
+    helloScreenTop.style.transition = "5s ease";
+    helloScreenTop.style.height = "0"
+    helloScreenTop.style.opacity= "0";
+    helloScreenTop.style.visibility = "hidden";
     nextRound.innerText = `Next round`;
     gameScore.innerText = `Score: 0`;
     gameRounds.innerText = `Round: 1/5`;
