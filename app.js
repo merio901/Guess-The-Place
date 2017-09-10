@@ -31,7 +31,7 @@ let multipliersSpan = document.querySelector('.multipliers h3 span');
 let helloScreenLeft = document.querySelector('.hello-screen__left');
 let helloScreenRight = document.querySelector('.hello-screen__right');
 let helloScreenTop = document.querySelector('.hello-screen__top');
-let helloMsg = document.querySelector('.hello-msg');
+let startGame = document.querySelector('.start-game');
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
 let skipButton = document.querySelectorAll('.skip-button');
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
   //REMOVE HELLO SCREEN
-  helloMsg.addEventListener('click', function(){
+  startGame.addEventListener('click', function(){
     helloScreenLeft.style.transition = "1s ease";
     helloScreenLeft.style.width = "0";
     helloScreenLeft.style.opacity= "0";

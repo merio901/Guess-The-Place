@@ -21,6 +21,34 @@ html, body {
   position: absolute;
   top: 0;
   background-position: center;
+  display: flex;
+  justify-content: center;
+}
+.hello-screen__top .title {
+  height: 5rem;
+  z-index: 10;
+  color: white;
+  font-size: 4rem;
+  text-shadow: 5px 5px 5px black;
+}
+.hello-screen__top .contact {
+  position: absolute;
+  z-index: 10;
+  color: white;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 1px black;
+}
+.hello-screen__top .contact a {
+  color: blue;
+}
+.hello-screen__top .contact a:visited {
+  text-decoration: none;
+}
+.hello-screen__top .contact a:focus {
+  text-decoration: none;
+}
+.hello-screen__top .contact a:hover {
+  text-decoration: none;
 }
 .hello-screen__top div {
   width: 100vw;
@@ -103,6 +131,38 @@ html, body {
   background: linear-gradient(to bottom, rgba(0,15,97,0) 0%, rgba(0,15,97,0.25) 4%, rgba(0,2,26,0.88) 14%, rgba(0,2,26,1) 16%, rgba(0,5,41,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000f61', endColorstr='#000529', GradientType=0 );
 }
+.hello-screen__left__box {
+  margin-top: 5rem;
+  font-size: 20px;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+  color: peru;
+}
+.hello-screen__left__box h1 {
+  color: yellow;
+}
+.precision-levels-list li{
+  margin-right: 2rem;
+  list-style: none;
+}
+.start-game {
+  color: springgreen;
+  cursor: pointer;
+  font-size: 3em;
+}
+.start-game:hover {
+  color: lightblue;
+}
+.highscores {
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.highscores:hover {
+  color: lightblue;
+}
 .hello-screen__right {
   width: 50vw;
   height: 80vh;
@@ -123,10 +183,18 @@ html, body {
   background: linear-gradient(to bottom, rgba(0,15,97,0) 0%, rgba(0,15,97,0.25) 4%, rgba(0,2,26,0.88) 14%, rgba(0,2,26,1) 16%, rgba(0,5,41,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000f61', endColorstr='#000529', GradientType=0 );
 }
-.hello-msg {
-  color: springgreen;
-  cursor: pointer;
-  font-size: 3em;
+.hello-screen__right__box {
+  margin-top: 5rem;
+  font-size: 1.25rem;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  overflow: hidden;
+  color: peru;
+}
+.hello-screen__right__box h1 {
+  color: yellow;
 }
 .map {
   position: absolute;
