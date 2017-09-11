@@ -112,6 +112,7 @@ html, body {
   background-image: url("../images/10.jpg");
 }
 .hello-screen__left {
+  overflow: hidden;
   width: 50vw;
   height: 80vh;
   visibility: visible;
@@ -133,7 +134,7 @@ html, body {
 }
 .hello-screen__left__box {
   margin-top: 5rem;
-  font-size: 20px;
+  font-size: 1.15rem;
   width: 30vw;
   display: flex;
   flex-direction: column;
@@ -143,6 +144,11 @@ html, body {
 }
 .hello-screen__left__box h1 {
   color: yellow;
+  font-size: 1.7rem;
+}
+.hello-screen__left__box h2 {
+  color: yellow;
+  font-size: 1.5rem;
 }
 .precision-levels-list li{
   margin-right: 2rem;
@@ -164,6 +170,7 @@ html, body {
   color: lightblue;
 }
 .hello-screen__right {
+  overflow: hidden;
   width: 50vw;
   height: 80vh;
   visibility: visible;
@@ -184,7 +191,7 @@ html, body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000f61', endColorstr='#000529', GradientType=0 );
 }
 .hello-screen__right__box {
-  margin-top: 5rem;
+  margin-top: 4rem;
   font-size: 1.25rem;
   width: 30vw;
   display: flex;
@@ -195,6 +202,21 @@ html, body {
 }
 .hello-screen__right__box h1 {
   color: yellow;
+}
+.hello-screen__right__box ul {
+  list-style: none;
+}
+.hello-screen__right__box ul li {
+  margin: 0.3rem 0;
+}
+.hello-screen__right__box .summary {
+  font-size: 2.5rem;
+}
+.color-span {
+  color: yellow;
+}
+.hello-screen__right__box ol li {
+  margin: 0.3rem 0;
 }
 .map {
   position: absolute;

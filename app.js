@@ -31,6 +31,7 @@ let multipliersSpan = document.querySelector('.multipliers h3 span');
 let helloScreenLeft = document.querySelector('.hello-screen__left');
 let helloScreenRight = document.querySelector('.hello-screen__right');
 let helloScreenTop = document.querySelector('.hello-screen__top');
+let helloScreenRightBox = document.querySelector('.hello-screen__right__box');
 let startGame = document.querySelector('.start-game');
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
@@ -113,15 +114,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //REMOVE HELLO SCREEN
   startGame.addEventListener('click', function(){
-    helloScreenLeft.style.transition = "1s ease";
+    helloScreenLeft.style.transition = "0.7s ease";
     helloScreenLeft.style.width = "0";
     helloScreenLeft.style.opacity= "0";
     helloScreenLeft.style.visibility = "hidden";
-    helloScreenRight.style.transition = "1s ease";
+    helloScreenRight.style.transition = "0.7s ease";
     helloScreenRight.style.width = "0"
     helloScreenRight.style.opacity= "0";
     helloScreenRight.style.visibility = "hidden";
-    helloScreenTop.style.transition = "1s ease";
+    helloScreenTop.style.transition = "0.7s ease";
     helloScreenTop.style.height = "0"
     helloScreenTop.style.opacity= "0";
     helloScreenTop.style.visibility = "hidden";
@@ -132,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // CREATE NEW GAME AND GENERATE FIRST ROUND
   theGame = new TheGame();
-  theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
+  theGame.generateRound(Math.abs(Math.round(Math.random() * roundsDatabase.length-1)));
   let map = new google.maps.Map(document.querySelector('.map'), {
     center: {lat: 0, lng: 0},
     zoom: 2,
@@ -459,18 +460,32 @@ document.addEventListener("DOMContentLoaded", function(){
     randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
     if(theGame.rounds.length === 5){
-      helloScreenLeft.style.transition = "1.5s ease";
+      helloScreenLeft.style.transition = "0.8s ease";
       helloScreenLeft.style.width = "50vw";
       helloScreenLeft.style.opacity= "1";
       helloScreenLeft.style.visibility = "visible";
-      helloScreenRight.style.transition = "1.5s ease";
+      helloScreenRight.style.transition = "0.8s ease";
       helloScreenRight.style.width = "50vw";
       helloScreenRight.style.opacity= "1";
       helloScreenRight.style.visibility = "visible";
-      helloScreenTop.style.transition = "1s ease";
+      helloScreenTop.style.transition = "0.8s ease";
       helloScreenTop.style.height = "33%"
       helloScreenTop.style.opacity= "1";
       helloScreenTop.style.visibility = "visible";
+
+      helloScreenRightBox.style.fontSize = "1.4rem";
+      helloScreenRightBox.style.textAlign = "center";
+      helloScreenRightBox.innerHTML =
+        `<h1 class="summary">Summary</h1>
+          <ul>
+            <li>Round 1: ${theGame.rounds[theGame.rounds.length-5].roundScore} points - ${theGame.rounds[theGame.rounds.length-5].address}</li>
+            <li>Round 2: ${theGame.rounds[theGame.rounds.length-4].roundScore} points - ${theGame.rounds[theGame.rounds.length-4].address}</li>
+            <li>Round 3: ${theGame.rounds[theGame.rounds.length-3].roundScore} points - ${theGame.rounds[theGame.rounds.length-3].address}</li>
+            <li>Round 4: ${theGame.rounds[theGame.rounds.length-2].roundScore} points - ${theGame.rounds[theGame.rounds.length-2].address}</li>
+            <li>Round 5: ${theGame.rounds[theGame.rounds.length-1].roundScore} points - ${theGame.rounds[theGame.rounds.length-1].address}</li>
+          </ul>
+          <p>Total score: <span class="color-span">${theGame.gameScore}</span> points.</p>
+        `;
 
       setTimeout(function(){
         theGame = new TheGame();

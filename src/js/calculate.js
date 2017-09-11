@@ -21,6 +21,6 @@ export function getRoundScore(startScore, error, multiplier){
 }
 
 export function generateRandomNumber(begin, end){
-  let result = Math.round(Math.random() * end - begin);
+  let result = Math.abs(Math.round(Math.random() * end - begin));
   return result;
 }
