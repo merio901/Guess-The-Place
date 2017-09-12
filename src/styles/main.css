@@ -18,6 +18,8 @@ html, body {
 .highscores-wrapper {
   position: fixed;
   z-index: 10;
+  visibility: hidden;
+  opacity: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0,0,0,0.45);

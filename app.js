@@ -52,6 +52,8 @@ let bonusDiv = document.querySelector('.bonus');
 let highscoresWrapper = document.querySelector('.highscores-wrapper');
 let cancelHighscoresForm = document.querySelector('.highscores-form__buttons--cancel');
 let submitHighscoresForm = document.querySelector('.highscores-form__buttons--submit');
+let highscoresForm = document.querySelector('.highscores-form');
+let highscoresName = document.getElementById('name');
 
 function switchToCity(){
   formCountry.classList.add('invisible');
@@ -118,18 +120,16 @@ function bonusDisappear(){
     storageBucket: "guess-the-place-1501421295034.appspot.com",
     messagingSenderId: "237364089511"
   };
+  firebase.initializeApp(config);
+  const ref = firebase.database().ref();
 
-  function sendHighScore(score){
-    const record = {};
-    console.log(score);
+  function sendHighScore(score, name){
+    let record = {};
     record.score = score;
-    record.name = prompt("What's your name?");
-
-    firebase.initializeApp(config);
-
-    const ref = firebase.database().ref();
-    ref.push(record);
-    console.log(ref);
+    record.name = name;
+    if(record.score != 0) {
+      ref.push(record);
+    }
   }
 
 
@@ -484,7 +484,6 @@ document.addEventListener("DOMContentLoaded", function(){
     randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
     if(theGame.rounds.length === 5){
-      sendHighScore(theGame.gameScore);
       helloScreenLeft.style.transition = "0.8s ease";
       helloScreenLeft.style.width = "50vw";
       helloScreenLeft.style.opacity= "1";
@@ -512,26 +511,48 @@ document.addEventListener("DOMContentLoaded", function(){
           <p>Total score: <span class="color-span">${theGame.gameScore}</span> points.</p>
         `;
 
+
       setTimeout(function(){
-        theGame = new TheGame();
-        theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
 
+        highscoresWrapper.style.visibility = "visible";
+        highscoresWrapper.style.transition = "1.5s ease";
+        highscoresWrapper.style.opacity = "1";
+        submitHighscoresForm.removeAttribute("disabled");
 
+        //CANCEL HIGHSCORES FORM
+        cancelHighscoresForm.addEventListener('click', function(e){
+          e.preventDefault();
+          highscoresWrapper.style.visibility = "hidden";
+          highscoresWrapper.style.transition = "0.5s ease";
+          highscoresWrapper.style.opacity = "0";
+          theGame = new TheGame();
+          theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
+        });
+
+        //SUBMIT HIGHSCORES FORM
+        highscoresForm.addEventListener('submit', function(e){
+          console.log('HELLO FROM SUBMIT');
+          e.preventDefault();
+          let name = highscoresName.value;
+          sendHighScore(theGame.gameScore, name);
+          theGame = new TheGame();
+          theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
+          submitHighscoresForm.setAttribute("disabled","true");
+          highscoresWrapper.style.visibility = "hidden";
+          highscoresWrapper.style.transition = "0.5s ease";
+          highscoresWrapper.style.opacity = "0";
+        });
 
       }, 2000);
     } else {
       theGame.generateRound(randomRound);
     }
+
     console.log(theGame.rounds);
     console.log("theGame.rounds.length: ",theGame.rounds.length);
     console.log(theGame.gameScore);
   })
 
-  //CANCEL HIGHSCORES FORM
-  cancelHighscoresForm.addEventListener('click', function(e){
-    e.preventDefault();
-    highscoresWrapper.style.zIndex = "0";
-  })
 
 
 })
