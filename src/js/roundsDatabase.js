@@ -30,7 +30,7 @@ export const roundsDatabase = [
     location: "Chłodna, Warsaw, Poland"
   },
   {
-    location: "Komisji Edukacji Narodowej, Warszawa, Poland"
+    location: "Aleja Komisji Edukacji Narodowej, Warszawa, Poland"
   },
   {
     location: "The Mall, Londyn, England"

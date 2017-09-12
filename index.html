@@ -12,6 +12,23 @@
   <body>
 
     <div class="hello-screen">
+      <aside class="highscores-wrapper">
+        <div class="highscores-form-box">
+          <form class="highscores-form">
+
+            <div class="highscores-form__name">
+              <label for="name" value="Your name: ">Your name</label>
+              <input type="text" id="name" name="" placeholder="The Best Explorer Of All Times">
+            </div>
+
+            <div class="highscores-form__buttons">
+              <button class="highscores-form__buttons--submit" type="submit" value="Submit">Submit</button>
+              <button class="highscores-form__buttons--cancel" type="button" value="Cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </aside>
+
       <div class="hello-screen__top">
         <p class="title">GuessThePlace</p>
         <p class="contact">
@@ -157,7 +174,7 @@
     </div>
 
   </body>
-
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5vQlnzJ96jGdY0dT2vlVDY3n19_QQtg"></script>
   <script type="text/javascript" src="./src/dist/bundle.js"></script>
 </html>

@@ -49,6 +49,9 @@ let roundScoreDiv = document.querySelector('.round-score');
 let errorHeader = document.querySelector('.error');
 let bonusDiv = document.querySelector('.bonus');
 
+let highscoresWrapper = document.querySelector('.highscores-wrapper');
+let cancelHighscoresForm = document.querySelector('.highscores-form__buttons--cancel');
+let submitHighscoresForm = document.querySelector('.highscores-form__buttons--submit');
 
 function switchToCity(){
   formCountry.classList.add('invisible');
@@ -106,10 +109,31 @@ function bonusDisappear(){
 }
 
 
+//FIREBASE HIGHSCORES
+  const config = {
+    apiKey: "AIzaSyCliOopBg7ZTXPgP5JhLAYWRV4HRtwL9Ww",
+    authDomain: "guess-the-place-1501421295034.firebaseapp.com",
+    databaseURL: "https://guess-the-place-1501421295034.firebaseio.com",
+    projectId: "guess-the-place-1501421295034",
+    storageBucket: "guess-the-place-1501421295034.appspot.com",
+    messagingSenderId: "237364089511"
+  };
+
+  function sendHighScore(score){
+    const record = {};
+    console.log(score);
+    record.score = score;
+    record.name = prompt("What's your name?");
+
+    firebase.initializeApp(config);
+
+    const ref = firebase.database().ref();
+    ref.push(record);
+    console.log(ref);
+  }
 
 
 document.addEventListener("DOMContentLoaded", function(){
-
 
 
   //REMOVE HELLO SCREEN
@@ -460,6 +484,7 @@ document.addEventListener("DOMContentLoaded", function(){
     randomRound = generateRandomNumber(0, roundsDatabase.length-1);
 
     if(theGame.rounds.length === 5){
+      sendHighScore(theGame.gameScore);
       helloScreenLeft.style.transition = "0.8s ease";
       helloScreenLeft.style.width = "50vw";
       helloScreenLeft.style.opacity= "1";
@@ -490,6 +515,9 @@ document.addEventListener("DOMContentLoaded", function(){
       setTimeout(function(){
         theGame = new TheGame();
         theGame.generateRound(Math.round(Math.random() * roundsDatabase.length-1));
+
+
+
       }, 2000);
     } else {
       theGame.generateRound(randomRound);
@@ -499,7 +527,11 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log(theGame.gameScore);
   })
 
-
+  //CANCEL HIGHSCORES FORM
+  cancelHighscoresForm.addEventListener('click', function(e){
+    e.preventDefault();
+    highscoresWrapper.style.zIndex = "0";
+  })
 
 
 })

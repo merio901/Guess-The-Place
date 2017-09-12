@@ -12,6 +12,55 @@ html, body {
 }
 .hello-screen {
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.highscores-wrapper {
+  position: fixed;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.highscores-form-box{
+  height: 10rem;
+  width: 30rem;
+  font-size: 1.5rem;
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FAEBD7;
+  box-shadow: 0px 0px 150px #FAEBD7;
+}
+.highscores-form__name input{
+  background-color: black;
+  color: white;
+  outline: none;
+  box-shadow: 0px 2px 15px 2px black;
+  border: none;
+  border-radius: 0.5rem;
+  padding-left: 0.5rem;
+  margin-left: 1rem;
+}
+.highscores-form__buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+}
+.highscores-form__buttons button {
+  width: 6rem;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  transition: 0.5s ease-out;
+  border-radius: 0.8rem;
+}
+.highscores-form__buttons button:hover {
+  background-color: grey;
 }
 .hello-screen__top {
   width: 100vw;
@@ -143,10 +192,13 @@ html, body {
   color: peru;
 }
 .hello-screen__left__box h1 {
+  margin-top: 2rem;
+  margin-bottom: 0;
   color: yellow;
   font-size: 1.7rem;
 }
 .hello-screen__left__box h2 {
+  margin-top: 1rem;
   color: yellow;
   font-size: 1.5rem;
 }
