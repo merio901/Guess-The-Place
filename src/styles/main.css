@@ -100,6 +100,8 @@ html, body {
 }
 .hello-screen__top .contact a:hover {
   text-decoration: none;
+  font-weight: 900;
+  text-shadow: 0 0 6px white;
 }
 .hello-screen__top div {
   width: 100vw;
@@ -211,16 +213,18 @@ html, body {
 .start-game {
   color: springgreen;
   cursor: pointer;
-  font-size: 3em;
+  font-size: 3rem;
 }
-.start-game:hover {
-  color: lightblue;
-}
-.highscores {
-  font-size: 1.6rem;
+.highscores-button,
+.rules-button {
   cursor: pointer;
+  font-size: 1.6rem;
+  display: inline-block;
+  margin: 0 1rem;
 }
-.highscores:hover {
+.highscores-button:hover,
+.rules-button:hover,
+.start-game:hover {
   color: lightblue;
 }
 .hello-screen__right {
@@ -271,6 +275,9 @@ html, body {
 }
 .hello-screen__right__box ol li {
   margin: 0.3rem 0;
+}
+.highscores-list {
+  color: red;
 }
 .map {
   position: absolute;

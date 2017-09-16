@@ -51,27 +51,48 @@ export const roundsDatabase = [
     location: "Spadina Ave, Toronto Ontario, Canada"
   },
   {
-    location: "The Quay, Ilfracombe, United Kingdom"
+    location: "Market St, Exeter, United Kingdom"
   },
   {
-    location: "Bulgaria, Mexico City, Mexico"
+    location: "Pearse St, Dublin, Ireland"
   },
   {
-    location: "Carrer de Mallorca, Barcelona, Spain"
+    location: "Av. Venezuela, Rio de Janeiro - RJ, 20220-460, Brazil"
   },
   {
-    location: "5th Avenue, New York, City USA"
+    location: "Avenue Gustave Eiffel, Paris, France"
   },
   {
-    location: "Via Celio Vibenna, Rome, Italy"
+    location: "-33.858826, 151.213455"
   },
   {
-    location: "The Square, Marazion, United Kingdom"
+    location: "Westerplatte 12, 31-033 Kraków, Poland"
   },
   {
-    location: "Pulsera, Algeciras, Spain"
+    location: "Powstańców Warszawy 45-49, 81-718 Sopot, Poland"
   },
   {
-    location: "Autopista del Saler, Valencia, Hiszpania"
+    location: "Kwiatka, Płock, Poland"
+  },
+  {
+    location: "25.779429, -80.132492"
+  },
+  {
+    location: "Dowcip, Warszawa 00-048, Poland"
+  },
+  {
+    location: "Orla 12, 90-317 Łódź, Poland"
+  },
+  {
+    location: "Karskiego 10, 91-071 Łódź, Poland"
+  },
+  {
+    location: "Eislebener Str. 15, 10789 Berlin, Germany"
+  },
+  {
+    location: "Kruisstraat 13, 3012 Rotterdam, Netherlands"
+  },
+  {
+    location: "-33.460219, -70.649938"
   }
 ]

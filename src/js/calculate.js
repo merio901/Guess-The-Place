@@ -4,9 +4,6 @@ export function calculateDistance(origin1, origin2) {
 }
 
 export function getRoundScore(startScore, error, multiplier){
-  console.log("Start score: ", startScore);
-  console.log("Error: ", error);
-  console.log("Multiplier: ", multiplier);
   let baseScore = startScore - error;
   let resultScore = 0;
 
@@ -14,9 +11,7 @@ export function getRoundScore(startScore, error, multiplier){
     resultScore = 200;
   } else {
     resultScore = (baseScore * multiplier);
-    console.log(baseScore);
   }
-  console.log("Round score: ", parseInt(resultScore.toFixed(2)));
   return parseInt(resultScore.toFixed(2));
 }
 

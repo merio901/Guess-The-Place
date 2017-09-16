@@ -11,7 +11,11 @@
 
   <body>
 
+
+    <!-- HELLO SCREEN -->
     <div class="hello-screen">
+
+      <!-- HIGHSCORES FORM -->
       <aside class="highscores-wrapper">
         <div class="highscores-form-box">
           <form class="highscores-form">
@@ -29,6 +33,7 @@
         </div>
       </aside>
 
+      <!-- HELLO SCREEN TOP SIDE -->
       <div class="hello-screen__top">
         <p class="title">GuessThePlace</p>
         <p class="contact">
@@ -46,8 +51,9 @@
         <div></div>
         <div></div>
       </div>
-      <div class="hello-screen__left">
 
+      <!-- HELLO SCREEN LEFT SIDE -->
+      <div class="hello-screen__left">
         <div class="hello-screen__left__box">
           <h1>Guess The Place - StreetView and Google Maps based game</h1>
           <p class="aim">
@@ -65,17 +71,17 @@
           </p>
           <div class="hello-screen__left-buttons">
             <p class="start-game">Start new game</p>
-            <p class="highscores">Highscores</p>
+            <p class="highscores-button">Highscores</p>
+            <p class="rules-button">Rules</p>
           </div>
         </div>
-
       </div>
 
-
+      <!-- HELLO SCREEN RIGHT SIDE -->
       <div class="hello-screen__right">
         <div class="hello-screen__right__box">
-          <h1>Rules</h1>
-          <div class="rules-summary-box">
+          <div class="rules-box">
+            <h1>Rules</h1>
             <ol>
               <li>Single game contains 5 rounds.</li>
               <li>Each round the game generates random Street View(only places in cities)</li>
@@ -88,10 +94,21 @@
               <li>After placing a marker on map, you should click "This is the place" button to end the round and see it's summary.</li>
             </ol>
           </div>
+
+          <div class="highscores-box invisible">
+            <h1>HIGHSCORES - TOP 10</h1>
+            <ol class="highscores-list"></ol>
+            <h2><span class="color-span"></span></h2>
+          </div>
+
+          <div class="summary-box">
+
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- THE ACTUAL GAME -->
     <div class="upperPanel">
       <div class="container">
         <div class="upperPanel__box">

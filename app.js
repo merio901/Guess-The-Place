@@ -31,7 +31,9 @@ let multipliersSpan = document.querySelector('.multipliers h3 span');
 let helloScreenLeft = document.querySelector('.hello-screen__left');
 let helloScreenRight = document.querySelector('.hello-screen__right');
 let helloScreenTop = document.querySelector('.hello-screen__top');
-let helloScreenRightBox = document.querySelector('.hello-screen__right__box');
+let summaryBox = document.querySelector('.summary-box');
+let rulesBox = document.querySelector('.rules-box');
+let rulesButton = document.querySelector('.rules-button');
 let startGame = document.querySelector('.start-game');
 let mapDiv = document.querySelector('.map');
 let streetViewDiv = document.querySelector('.street-view');
@@ -54,6 +56,9 @@ let cancelHighscoresForm = document.querySelector('.highscores-form__buttons--ca
 let submitHighscoresForm = document.querySelector('.highscores-form__buttons--submit');
 let highscoresForm = document.querySelector('.highscores-form');
 let highscoresName = document.getElementById('name');
+let highscoresButton = document.querySelector('.highscores-button');
+let highscoresListBox = document.querySelector('.highscores-box');
+let highscoresList = document.querySelector('.highscores-list');
 
 function switchToCity(){
   formCountry.classList.add('invisible');
@@ -112,6 +117,7 @@ function bonusDisappear(){
 
 
 //FIREBASE HIGHSCORES
+
   const config = {
     apiKey: "AIzaSyCliOopBg7ZTXPgP5JhLAYWRV4HRtwL9Ww",
     authDomain: "guess-the-place-1501421295034.firebaseapp.com",
@@ -120,15 +126,44 @@ function bonusDisappear(){
     storageBucket: "guess-the-place-1501421295034.appspot.com",
     messagingSenderId: "237364089511"
   };
-  firebase.initializeApp(config);
-  const ref = firebase.database().ref();
 
+  //INITLIALIZE FIREBASE
+  firebase.initializeApp(config);
+  const myFBref = firebase.database().ref();
+
+
+  function sortScore(myList) {
+    var elements = Array.from(highscoresList.children);
+    elements.sort(function (a, b) {
+      let va = parseInt(a.getAttribute('data-id'));
+      let vb = parseInt(b.getAttribute('data-id'));
+      return vb - va;
+    });
+    elements.forEach(function(nextLi){
+      highscoresList.appendChild(nextLi);
+    })
+  }
+
+  //GET RECORDS FROM DATABASE AND PUT INT INTO LIST
+  myFBref.orderByChild("score").limitToLast(10).on("child_added", function(data) {
+    //FILL TAB WITH ASCENDING RECORDS THEN SORT DESCENDING
+
+    highscoresList.innerHTML += `<li data-id=${data.val().score}> ${data.val().name} - ${data.val().score} points.</li>`
+    sortScore(highscoresList); //Use sorting list function everytime child is added.
+
+    if(highscoresList.children.length === 11){
+      highscoresList.removeChild(highscoresList.childNodes[10]);
+    }
+  });
+
+
+  //SEND HIGHSCORE TO DATABASE
   function sendHighScore(score, name){
     let record = {};
-    record.score = score;
+    record.score = parseInt(score);
     record.name = name;
     if(record.score != 0) {
-      ref.push(record);
+      myFBref.push(record);
     }
   }
 
@@ -346,8 +381,6 @@ document.addEventListener("DOMContentLoaded", function(){
       theGame.rounds[theGame.rounds.length-1].shots--;
       shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
-
-        console.log(location);
         fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
         .then(res => res.json())
         .then(res => {
@@ -375,7 +408,11 @@ document.addEventListener("DOMContentLoaded", function(){
             switchToPin();
             map.setCenter({lat: lat, lng: lng});
             map.setZoom(14);
-            actualStreet.innerText = `Street: ${res.results[0].formatted.split(",")[0]}`;
+            if(res.results[0].components.road === undefined) {
+              actualStreet.innerText = `Street: ${res.results[0].formatted.split(",")[0]}`;
+            } else {
+              actualStreet.innerText = `Street: ${res.results[0].components.road}`;
+            }
           }
         })
         if(theGame.rounds[theGame.rounds.length-1].shots <= 0){
@@ -497,9 +534,13 @@ document.addEventListener("DOMContentLoaded", function(){
       helloScreenTop.style.opacity= "1";
       helloScreenTop.style.visibility = "visible";
 
-      helloScreenRightBox.style.fontSize = "1.4rem";
-      helloScreenRightBox.style.textAlign = "center";
-      helloScreenRightBox.innerHTML =
+      highscoresListBox.classList.add('invisible');
+      highscoresListBox.querySelector('h2').innerHTML = `Your score last game: <span class="color-span">${theGame.gameScore}</span> points.`;
+      rulesBox.classList.add('invisible');
+      summaryBox.classList.remove('invisible');
+      summaryBox.style.fontSize = "1.4rem";
+      summaryBox.style.textAlign = "center";
+      summaryBox.innerHTML =
         `<h1 class="summary">Summary</h1>
           <ul>
             <li>Round 1: ${theGame.rounds[theGame.rounds.length-5].roundScore} points - ${theGame.rounds[theGame.rounds.length-5].address}</li>
@@ -531,7 +572,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
         //SUBMIT HIGHSCORES FORM
         highscoresForm.addEventListener('submit', function(e){
-          console.log('HELLO FROM SUBMIT');
           e.preventDefault();
           let name = highscoresName.value;
           sendHighScore(theGame.gameScore, name);
@@ -542,17 +582,25 @@ document.addEventListener("DOMContentLoaded", function(){
           highscoresWrapper.style.transition = "0.5s ease";
           highscoresWrapper.style.opacity = "0";
         });
-
       }, 2000);
     } else {
       theGame.generateRound(randomRound);
     }
-
-    console.log(theGame.rounds);
-    console.log("theGame.rounds.length: ",theGame.rounds.length);
-    console.log(theGame.gameScore);
   })
 
 
+  //SHOW RULES BUTTON
+  rulesButton.addEventListener('click', function(){
+    rulesBox.classList.remove('invisible');
+    highscoresListBox.classList.add('invisible');
+    summaryBox.classList.add('invisible');
+  })
+
+  //SHOW HIGHSCORES BUTTON
+  highscoresButton.addEventListener('click', function(){
+    highscoresListBox.classList.remove('invisible');
+    rulesBox.classList.add('invisible');
+    summaryBox.classList.add('invisible');
+  });
 
 })

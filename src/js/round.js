@@ -17,8 +17,7 @@ export class Round {
     .then(res => res.json())
     .then(res => {
       // console.log("Length: " + roundsDatabase.length + " Res number: " + i, res.results[0].components, res.results[0].formatted);
-      console.log(res.results[0].formatted);
-
+      
       // GET GEOMETRY THEN INIT STREETVIEW
       let lat = res.results[0].geometry.lat;
       let lng = res.results[0].geometry.lng;
