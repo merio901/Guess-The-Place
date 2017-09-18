@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       if(formCountry.className != 'invisible') {
         let location = theGame.rounds[theGame.rounds.length-1].address;
-        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
         .then(res => res.json()
         .then(res => {
           if(checkCountry(formCountryVal, res) === true){
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       if(formCity.className != 'invisible') {
         let location = theGame.rounds[theGame.rounds.length-1].address;
-        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
         .then(res => res.json())
         .then(res => {
           if(checkCity(formCityVal, res) === true){
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       if(formStreet.className != 'invisible') {
         let location = theGame.rounds[theGame.rounds.length-1].address;
-        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
         .then(res => res.json())
         .then(res => {
           let lat = res.results[0].geometry.lat;
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
     let location = theGame.rounds[theGame.rounds.length-1].address;
-    fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+    fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json())
     .then(res => {
       if(theGame.rounds[theGame.rounds.length-1].shots != 0){
@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function(){
   //HANDLE MOVE TO START BUTTON
   moveToStart.addEventListener('click', function(){
     let location = theGame.rounds[theGame.rounds.length-1].address;
-    fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+    fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json()
     .then(res => {
       let lat = res.results[0].geometry.lat;
@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function(){
       theGame.rounds[theGame.rounds.length-1].shots--;
       shotsDiv.innerText = `Shots left: ${theGame.rounds[theGame.rounds.length-1].shots}`;
 
-        fetch(`http://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
         .then(res => res.json())
         .then(res => {
 
