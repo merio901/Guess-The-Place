@@ -13,11 +13,11 @@ export class Round {
     // for(let i = 0; i<roundsDatabase.length; i++){
 
     this.address = roundsDatabase[nextRound].location;
-    fetch(`http://api.opencagedata.com/geocode/v1/json?q=${this.address}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
+    fetch(`https://api.opencagedata.com/geocode/v1/json?q=${this.address}&language=en&limit=1&key=42b21bb9ab0d4b1da3fcdb17ca2ca2a3`)
     .then(res => res.json())
     .then(res => {
       // console.log("Length: " + roundsDatabase.length + " Res number: " + i, res.results[0].components, res.results[0].formatted);
-      
+
       // GET GEOMETRY THEN INIT STREETVIEW
       let lat = res.results[0].geometry.lat;
       let lng = res.results[0].geometry.lng;
