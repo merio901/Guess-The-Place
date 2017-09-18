@@ -1,4 +1,3 @@
-import './src/styles/main.css';
 import { TheGame } from './src/js/gameCreator.js';
 import { checkCountry, checkCity, checkStreet } from './src/js/checkers.js';
 import { roundsDatabase } from './src/js/roundsDatabase.js';
