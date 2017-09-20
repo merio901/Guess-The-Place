@@ -2,13 +2,13 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: 'Patrick Hand SC', cursive;
-  font-size: 18px;
   padding: 0;
   box-sizing: border-box;
 }
 .container {
   position: relative;
   width: 1200px;
+  margin: 0 auto;
 }
 .hello-screen {
   overflow: hidden;
@@ -46,7 +46,9 @@ html, body {
   border: none;
   border-radius: 0.5rem;
   padding-left: 0.5rem;
+  padding-right: 0.5rem;
   margin-left: 1rem;
+  font: 1.5rem 'Patrick Hand SC', cursive;
 }
 .highscores-form__buttons {
   margin-top: 2rem;
@@ -60,6 +62,8 @@ html, body {
   outline: none;
   transition: 0.5s ease-out;
   border-radius: 0.8rem;
+  font: 1.5rem 'Patrick Hand SC', cursive;
+  cursor: pointer;
 }
 .highscores-form__buttons button:hover {
   background-color: grey;
@@ -81,16 +85,19 @@ html, body {
   color: white;
   font-size: 4rem;
   text-shadow: 5px 5px 5px black;
+  margin-top: 2rem;
 }
 .hello-screen__top .contact {
+  margin-top: 0.5rem;
   position: absolute;
   z-index: 10;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-shadow: 1px 1px 1px black;
 }
 .hello-screen__top .contact a {
   color: blue;
+  text-decoration: none;
 }
 .hello-screen__top .contact a:visited {
   text-decoration: none;
@@ -100,7 +107,6 @@ html, body {
 }
 .hello-screen__top .contact a:hover {
   text-decoration: none;
-  font-weight: 900;
   text-shadow: 0 0 6px white;
 }
 .hello-screen__top div {
@@ -186,41 +192,50 @@ html, body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000f61', endColorstr='#000529', GradientType=0 );
 }
 .hello-screen__left__box {
-  margin-top: 5rem;
-  font-size: 1.15rem;
   width: 30vw;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
   overflow: hidden;
   color: peru;
 }
+.hello-screen__left__box p {
+  text-align: center;
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+}
 .hello-screen__left__box h1 {
-  margin-top: 2rem;
-  margin-bottom: 0;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
   color: yellow;
-  font-size: 1.7rem;
+  font-size: 2rem;
+  font-weight: normal;
 }
 .hello-screen__left__box h2 {
-  margin-top: 1rem;
+  margin: 0.5rem 0;
+  text-align: center;
   color: yellow;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: normal;
 }
 .precision-levels-list li{
+  text-align: center;
   margin-right: 2rem;
+  font-size: 1.2rem;
   list-style: none;
 }
-.start-game {
-  color: springgreen;
+.hello-screen__left__box .highscores-button,
+.hello-screen__left__box .rules-button {
   cursor: pointer;
-  font-size: 3rem;
-}
-.highscores-button,
-.rules-button {
-  cursor: pointer;
-  font-size: 1.6rem;
-  display: inline-block;
+  font-size: 1.8rem;
   margin: 0 1rem;
+}
+.hello-screen__left__box .start-game {
+  color: springgreen;
+  font-size: 3rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.hello-screen__left__box .start-game:hover {
+  transform: rotate(5deg);
 }
 .highscores-button:hover,
 .rules-button:hover,
@@ -250,7 +265,7 @@ html, body {
 }
 .hello-screen__right__box {
   margin-top: 4rem;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   width: 30vw;
   display: flex;
   flex-direction: column;
@@ -276,8 +291,16 @@ html, body {
 .hello-screen__right__box ol li {
   margin: 0.3rem 0;
 }
-.highscores-list {
+.hello-screen__right__box .highscores-list {
   color: red;
+  font-size: 1.6rem;
+}
+.highscores-box h2 {
+  font-size: 1.4rem;
+  text-align: center;
+}
+.highscores-box h1 {
+  font-size: 3rem;
 }
 .map {
   position: absolute;
@@ -302,10 +325,10 @@ html, body {
   bottom: 15%;
   z-index: 2;
   outline: none;
+  cursor: pointer;
 }
 .guess-place:hover{
   background-color: rgba(0,156,0,0.7);
-  border: 1px solid blue;
   font-weight: 700;
   color: blue;
 }
@@ -346,7 +369,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.3em;
+  padding-top: 0.5rem;
 }
 .upperPanel .position {
   width: 40%;
@@ -384,6 +407,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
   margin-top: 0.6rem;
   width: 100%;
   display: flex;
+  font-size: 1.4rem;
 }
 .form {
   display: flex;
@@ -393,7 +417,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
   margin-bottom: 0;
   margin-right: 5px;
   width: 10rem;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   color: lightblue;
   letter-spacing: 2px;
   font-weight: normal;
@@ -407,7 +431,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
   box-shadow: 0px 0px 250px darkblue;
   border: none;
   outline: none;
-  font-size: 1.25rem;
+  font: 1.25rem 'Patrick Hand SC', cursive;
   background: rgba(53,64,102,1);
   background: -moz-linear-gradient(left, rgba(53,64,102,1) 0%, rgba(3,116,116,1) 100%);
   background: -webkit-gradient(left top, right top, color-stop(0%, rgba(53,64,102,1)), color-stop(100%, rgba(3,116,116,1)));
@@ -417,20 +441,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
   background: linear-gradient(to right, rgba(53,64,102,1) 0%, rgba(3,116,116,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#354066', endColorstr='#037474', GradientType=1 );
 }
+.form-street .form-buttons .skip-button {
+  font: 1.4rem 'Patrick Hand SC', cursive;
+}
 .form .form-buttons {
   width: 12rem;
   display: flex;
   justify-content: space-around;
-  font-size: 1.25rem;
+  margin-left: 2rem;
 }
 .form-buttons .submit-button {
   border: none;
   background-color: transparent;
   color: springgreen;
   outline: none;
+  font: 1.4rem 'Patrick Hand SC', cursive;
 }
 .form-buttons .submit-button:hover {
   color: yellow;
+  cursor: pointer;
 }
 .form-buttons .skip-button {
   cursor: pointer;
@@ -454,7 +483,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
 }
 .restart-shots {
   display: flex;
-  font-size: 1.25rem;
   justify-content: space-around;
   width: 20rem;
   color: lightblue;
@@ -510,7 +538,7 @@ h1 {
   font-size: 1.1rem;
 }
 .next-round {
-  font-size: 2rem;
+  font: 2rem 'Patrick Hand SC', cursive;
   position: absolute;
   left: 120px;
   bottom: 15px;
@@ -519,6 +547,7 @@ h1 {
   border-bottom: 2px solid blue;
   outline: none;
   color: black;
+  cursor: pointer;
 }
 .next-round:hover {
   color: blue;
