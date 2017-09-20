@@ -467,7 +467,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000b33', end
   .bottomPanel__box--up,
   .form input,
   .form label,
-  .form-buttons .submit-button {
+  .form-buttons .submit-button,
+  .form-street .form-buttons .skip-button {
     font: 1.1rem 'Patrick Hand SC', cursive;
   }
 }
