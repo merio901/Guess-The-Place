@@ -234,6 +234,33 @@ html, body {
   padding: 0;
   margin: 0;
 }
+@media (max-height: 768px) {
+  .hello-screen__left__box p {
+    font-size: 1.1rem;
+  }
+  .hello-screen__left__box h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  .hello-screen__left__box h2 {
+    font-size: 1.4rem;
+  }
+  .precision-levels-list li {
+    font-size: 1rem;
+  }
+  .hello-screen__left__box .highscores-button,
+  .hello-screen__left__box .rules-button {
+    font-size: 1.6rem;
+    margin: 0 1rem;
+  }
+  .hello-screen__left__box .start-game {
+    font-size: 2rem;
+  }
+  .precision-levels-list {
+    margin-bottom: 0;
+  }
+}
+
 .hello-screen__left__box .start-game:hover {
   transform: rotate(5deg);
 }
@@ -273,6 +300,7 @@ html, body {
   overflow: hidden;
   color: peru;
 }
+
 .hello-screen__right__box h1 {
   color: yellow;
 }
@@ -301,6 +329,20 @@ html, body {
 }
 .highscores-box h1 {
   font-size: 3rem;
+}
+@media (max-height: 768px) {
+  .hello-screen__right__box {
+    font-size: 1rem;
+  }
+  .highscores-box h1 {
+    font-size: 2rem;
+  }
+  .highscores-box h2 {
+    font-size: 1.2rem;
+  }
+  .hello-screen__right__box .highscores-list {
+    font-size: 1.2rem;
+  }
 }
 .map {
   position: absolute;
